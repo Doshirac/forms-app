@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { Suspense } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import './index.css';
 import App from './App';
-
-// import i18n (needs to be bundled ;))
 import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Suspense fallback="...is loading">
-      <App />
-    </Suspense>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Suspense fallback="...is loading">
+          <App />
+        </Suspense>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

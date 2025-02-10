@@ -1,6 +1,26 @@
 {
-    "description": {
-      "part1": "Ändere <1>src/App.js</1> und speichere um neu zu laden.",
-      "part2": "Lerne React"
-    }
+  "header": {
+    "title": "Meine App",
+    "login": "Anmelden",
+    "register": "Registrieren"
+  },
+  "registration": {
+    "title": "Registrierung",
+    "labelName": "Name",
+    "labelEmail": "E-Mail",
+    "labelPassword": "Passwort",
+    "labelConfirmPassword": "Passwort bestätigen",
+    "btnRegister": "Registrieren",
+    "alreadyRegistered": "Wenn Sie bereits ein Konto haben, bitte anmelden?",
+    "signIn": "Anmelden"
+  },
+  "login": {
+    "title": "Anmeldung",
+    "labelEmail": "E-Mail",
+    "labelPassword": "Passwort",
+    "btnLogin": "Anmelden",
+    "forgotPassword": "Passwort vergessen?",
+    "dontHaveAccount": "Wenn Sie noch kein Konto haben, bitte registrieren?",
+    "createAccount": "Konto erstellen"
   }
+}

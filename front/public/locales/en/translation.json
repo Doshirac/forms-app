@@ -1,6 +1,26 @@
 {
-    "description": {
-      "part1": "Edit <1>src/App.js</1> and save to reload.",
-      "part2": "Learn React"
-    }
+  "header": {
+    "title": "My App",
+    "login": "Login",
+    "register": "Register"
+  },
+  "registration": {
+    "title": "Registration",
+    "labelName": "Name",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "labelConfirmPassword": "Confirm Password",
+    "btnRegister": "Register",
+    "alreadyRegistered": "Sign in if you have an account already?",
+    "signIn": "Sign in"
+  },
+  "login": {
+    "title": "Login",
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "btnLogin": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "dontHaveAccount": "Sign up if not registered yet?",
+    "createAccount": "Create Account"
   }
+}
