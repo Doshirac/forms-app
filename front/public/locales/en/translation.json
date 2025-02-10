@@ -2,7 +2,8 @@
   "header": {
     "title": "My App",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "signOut": "Sign Out"
   },
   "registration": {
     "title": "Registration",
@@ -11,7 +12,7 @@
     "labelPassword": "Password",
     "labelConfirmPassword": "Confirm Password",
     "btnRegister": "Register",
-    "alreadyRegistered": "Already have an account? Sign in",
+    "alreadyRegistered": "Already have an account?",
     "signIn": "Sign in"
   },
   "login": {
@@ -20,7 +21,7 @@
     "labelPassword": "Password",
     "btnLogin": "Login",
     "forgotPassword": "Forgot password?",
-    "dontHaveAccount": "Don't have an account? Sign up",
+    "dontHaveAccount": "Don't have an account?",
     "createAccount": "Create Account"
   }
 }

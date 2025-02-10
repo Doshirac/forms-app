@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
 
 export const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,7 +36,7 @@ export const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("jwtToken", data.token);
+        login(data.token);
         navigate("/");
       } else {
         const data = await response.json();

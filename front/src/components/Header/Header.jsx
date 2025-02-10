@@ -2,10 +2,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import { useAuth } from "../../context/AuthContext";
 
 export const Header = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleLanguageChange = (event) => {
     const selectedLang = event.target.value;
@@ -13,6 +15,11 @@ export const Header = () => {
   };
 
   const isLoginPage = window.location.pathname === "/login";
+
+  const handleSignOut = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <header className="flex items-center justify-between p-4
@@ -35,12 +42,21 @@ export const Header = () => {
       </div>
       <ThemeToggle />
       <div>
-        <button
-          onClick={() => navigate(isLoginPage ? "/register" : "/login")}
-          className="px-3 py-1 bg-purple-600 text-white rounded dark:bg-purple-800"
-        >
-          {isLoginPage ? t("header.register") : t("header.login")}
-        </button>
+        {isAuthenticated ? (
+          <button
+            onClick={handleSignOut}
+            className="px-3 py-1 bg-red-600 text-white rounded dark:bg-red-800"
+          >
+            {t("header.signOut")}
+          </button>
+        ) : (
+          <button
+            onClick={() => navigate(isLoginPage ? "/register" : "/login")}
+            className="px-3 py-1 bg-purple-600 text-white rounded dark:bg-purple-800"
+          >
+            {isLoginPage ? t("header.register") : t("header.login")}
+          </button>
+        )}
       </div>
     </header>
   );

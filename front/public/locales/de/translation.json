@@ -2,7 +2,8 @@
   "header": {
     "title": "Meine App",
     "login": "Anmelden",
-    "register": "Registrieren"
+    "register": "Registrieren",
+    "signOut": "Abmelden"
   },
   "registration": {
     "title": "Registrierung",
@@ -11,7 +12,7 @@
     "labelPassword": "Passwort",
     "labelConfirmPassword": "Passwort bestätigen",
     "btnRegister": "Registrieren",
-    "alreadyRegistered": "Wenn Sie bereits ein Konto haben, bitte anmelden?",
+    "alreadyRegistered": "Wenn Sie bereits ein Konto haben?",
     "signIn": "Anmelden"
   },
   "login": {
@@ -20,7 +21,7 @@
     "labelPassword": "Passwort",
     "btnLogin": "Anmelden",
     "forgotPassword": "Passwort vergessen?",
-    "dontHaveAccount": "Wenn Sie noch kein Konto haben, bitte registrieren?",
+    "dontHaveAccount": "Wenn Sie noch kein Konto haben?",
     "createAccount": "Konto erstellen"
   }
 }
