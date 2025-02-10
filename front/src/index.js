@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import './index.css';
@@ -11,11 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <BrowserRouter>
-        <Suspense fallback="...is loading">
-          <App />
-        </Suspense>
-      </BrowserRouter>
+      <Suspense fallback="...is loading">
+        <App />
+      </Suspense>
     </ThemeProvider>
   </React.StrictMode>
 );

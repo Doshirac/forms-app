@@ -11,16 +11,16 @@
     "labelPassword": "Password",
     "labelConfirmPassword": "Confirm Password",
     "btnRegister": "Register",
-    "alreadyRegistered": "Sign in if you have an account already?",
+    "alreadyRegistered": "Already have an account? Sign in",
     "signIn": "Sign in"
   },
   "login": {
     "title": "Login",
     "labelEmail": "Email",
     "labelPassword": "Password",
-    "btnLogin": "Sign in",
+    "btnLogin": "Login",
     "forgotPassword": "Forgot password?",
-    "dontHaveAccount": "Sign up if not registered yet?",
+    "dontHaveAccount": "Don't have an account? Sign up",
     "createAccount": "Create Account"
   }
 }
