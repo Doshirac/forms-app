@@ -22,6 +22,23 @@
     "btnLogin": "Login",
     "forgotPassword": "Forgot password?",
     "dontHaveAccount": "Don't have an account?",
-    "createAccount": "Create Account"
+    "createAccount": "Create Account",
+    "enterEmail": "Please enter your email",
+    "enterPassword": "Please enter your password",
+    "btnCancel": "Cancel"
+  },
+  "errors": {
+    "login": {
+      "invalidCredentials": "Invalid email or password",
+      "serverError": "Server error occurred",
+      "accountBlocked": "Your account is blocked",
+      "generic": "Login failed"
+    },
+    "registration": {
+      "emailExists": "Email already exists",
+      "passwordMismatch": "Passwords do not match",
+      "serverError": "Server error occurred",
+      "generic": "Registration failed"
+    }
   }
 }

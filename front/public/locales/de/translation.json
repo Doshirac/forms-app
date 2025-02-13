@@ -22,6 +22,23 @@
     "btnLogin": "Anmelden",
     "forgotPassword": "Passwort vergessen?",
     "dontHaveAccount": "Wenn Sie noch kein Konto haben?",
-    "createAccount": "Konto erstellen"
+    "createAccount": "Konto erstellen",
+    "enterEmail": "Bitte geben Sie Ihre E-Mail-Adresse ein",
+    "enterPassword": "Bitte geben Sie Ihr Passwort ein",
+    "btnCancel": "Abbrechen"
+  },
+  "errors": {
+    "login": {
+      "invalidCredentials": "Ungültige E-Mail oder Passwort",
+      "serverError": "Serverfehler aufgetreten",
+      "accountBlocked": "Ihr Konto ist gesperrt",
+      "generic": "Anmeldung fehlgeschlagen"
+    },
+    "registration": {
+      "emailExists": "E-Mail existiert bereits",
+      "passwordMismatch": "Passwörter stimmen nicht überein",
+      "serverError": "Serverfehler aufgetreten",
+      "generic": "Registrierung fehlgeschlagen"
+    }
   }
 }
