@@ -40,5 +40,11 @@
       "serverError": "Serverfehler aufgetreten",
       "generic": "Registrierung fehlgeschlagen"
     }
+  },
+  "footer": {
+    "copyright": "Alle Rechte vorbehalten",
+    "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
+    "contact": "Kontaktieren Sie uns"
   }
 }

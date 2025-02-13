@@ -40,5 +40,11 @@
       "serverError": "Server error occurred",
       "generic": "Registration failed"
     }
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us"
   }
 }

@@ -4,6 +4,7 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path="/register" element={<RegistrationPage />} />
               <Route path="/" element={<div>Home Page</div>} />
             </Routes>
+            <Footer />
           </div>
         </Router>
       </ThemeProvider>
