@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Button } from "../../components/Button/Button";
 
 export const RegistrationPage = () => {
   const { t } = useTranslation();
@@ -53,76 +54,170 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
-      <form
-        onSubmit={handleSubmit}
-        className="p-6 bg-white dark:bg-gray-800 rounded shadow-md w-80"
-      >
-        <h2 className="text-2xl font-bold mb-4 dark:text-white">
-          {t("registration.title")}
-        </h2>
-        {errorMessage && (
-          <div className="bg-red-100 dark:bg-red-200 text-red-700 p-2 mb-4 rounded">
-            {errorMessage}
-          </div>
-        )}
-        <div className="mb-4">
-          <label className="block mb-1 dark:text-white">{t("registration.labelName")}</label>
-          <input
-            name="username"
-            type="text"
-            className="border w-full p-2 dark:bg-gray-700 dark:text-white"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
+    // <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+    //   <form
+    //     onSubmit={handleSubmit}
+    //     className="p-6 bg-white dark:bg-gray-800 rounded shadow-md w-80"
+    //   >
+    //     <h2 className="text-2xl font-bold mb-4 dark:text-white">
+    //       {t("registration.title")}
+    //     </h2>
+    //     {errorMessage && (
+    //       <div className="bg-red-100 dark:bg-red-200 text-red-700 p-2 mb-4 rounded">
+    //         {errorMessage}
+    //       </div>
+    //     )}
+    //     <div className="mb-4">
+    //       <label className="block mb-1 dark:text-white">{t("registration.labelName")}</label>
+    //       <input
+    //         name="username"
+    //         type="text"
+    //         className="border w-full p-2 dark:bg-gray-700 dark:text-white"
+    //         value={formData.username}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+    //     <div className="mb-4">
+    //       <label className="block mb-1 dark:text-white">{t("registration.labelEmail")}</label>
+    //       <input
+    //         name="email"
+    //         type="email"
+    //         className="border w-full p-2 dark:bg-gray-700 dark:text-white"
+    //         value={formData.email}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+    //     <div className="mb-4">
+    //       <label className="block mb-1 dark:text-white">{t("registration.labelPassword")}</label>
+    //       <input
+    //         name="password"
+    //         type="password"
+    //         className="border w-full p-2 dark:bg-gray-700 dark:text-white"
+    //         value={formData.password}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+    //     <div className="mb-4">
+    //       <label className="block mb-1 dark:text-white">{t("registration.labelConfirmPassword")}</label>
+    //       <input
+    //         name="repeatPassword"
+    //         type="password"
+    //         className="border w-full p-2 dark:bg-gray-700 dark:text-white"
+    //         value={formData.repeatPassword}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+    //     <button
+    //       type="submit"
+    //       className="bg-blue-500 text-white p-2 w-full rounded hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"
+    //     >
+    //       {t("registration.btnRegister")}
+    //     </button>
+    //     <div className="mt-4 text-center text-sm dark:text-white">
+    //       <span>{t("registration.alreadyRegistered")}</span>{" "}
+    //       <Link to="/login" className="text-blue-500 hover:text-blue-600">
+    //         {t("registration.signIn")}
+    //       </Link>
+    //     </div>
+    //   </form>
+    // </div>
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="m-auto bg-white dark:bg-gray-800 border border-white dark:border-gray-700 rounded-3xl w-[26%] h-[90%] flex justify-center items-center shadow-md max-[768px]:w-[80%] max-[768px]:h-[70%]">
+        <div className="h-[80%] w-2/3 flex flex-col justify-between items-center">
+          <h2 className="text-xl font-bold text-gray-800 dark:text-white max-[768px]:text-base">
+            {t("registration.title")}
+          </h2>
+            {errorMessage && (
+              <div className="bg-red-100 dark:bg-red-200 text-red-700 p-2 mb-4 rounded w-full text-center">
+                {errorMessage}
+              </div>
+            )}
+          <form
+            onSubmit={handleSubmit}
+            className="m-0 w-full h-[90%] flex flex-col justify-between items-center"
+          >
+            <div className="w-full">
+              <label className="block text-gray-700 dark:text-gray-200 text-[2vh] font-bold mb-2 max-[768px]:text-[1.6vh]">
+                {t("registration.labelName")}
+              </label>
+              <div className="relative">
+                <input
+                  name="username"
+                  type="text"
+                  required
+                  value={formData.username}
+                  onChange={handleChange}
+                  className="w-full h-12 pl-4 pr-10 bg-green-100 focus:ring-green-600 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 dark:focus:ring-yellow-500"
+                  placeholder={t("registration.placeholderName")}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label className="block text-gray-700 dark:text-gray-200 text-[2vh] font-bold mb-2 max-[768px]:text-[1.6vh]">
+                {t("registration.labelEmail")}
+              </label>
+              <div className="relative">
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full h-12 pl-4 pr-10 bg-green-100 focus:ring-green-600 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 dark:focus:ring-yellow-500"
+                  placeholder={t("registration.placeholderEmail")}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label className="block text-gray-700 dark:text-gray-200 text-[2vh] font-bold mb-2 max-[768px]:text-[1.6vh]">
+                {t("registration.labelPassword")}
+              </label>
+              <div className="relative">
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full h-12 pl-4 pr-10 bg-green-100 focus:ring-green-600 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 dark:focus:ring-yellow-500"
+                  placeholder={t("registration.placeholderPassword")}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label className="block text-gray-700 dark:text-gray-200 text-[2vh] font-bold mb-2 max-[768px]:text-[1.6vh]">
+                {t("registration.labelConfirmPassword")}
+              </label>
+              <div className="relative">
+                <input
+                  name="repeatPassword"
+                  type="password"
+                  required
+                  value={formData.repeatPassword}
+                  onChange={handleChange}
+                  className="w-full h-12 pl-4 pr-10 bg-green-100 focus:ring-green-600 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 dark:focus:ring-yellow-500"
+                  placeholder={t("registration.placeholderConfirm") || "Confirm your password"}
+                />
+              </div>
+            </div>
+            <Button
+              type="submit"
+              size="large"
+              text={t("registration.btnRegister")} 
+            />
+            <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
+              {t("registration.alreadyRegistered")}{" "}
+              <Link to="/login" className="text-green-600 dark:text-yellow-600 hover:underline">
+                {t("registration.signIn")}
+              </Link>
+            </p>
+          </form>
         </div>
-        <div className="mb-4">
-          <label className="block mb-1 dark:text-white">{t("registration.labelEmail")}</label>
-          <input
-            name="email"
-            type="email"
-            className="border w-full p-2 dark:bg-gray-700 dark:text-white"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-1 dark:text-white">{t("registration.labelPassword")}</label>
-          <input
-            name="password"
-            type="password"
-            className="border w-full p-2 dark:bg-gray-700 dark:text-white"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-1 dark:text-white">{t("registration.labelConfirmPassword")}</label>
-          <input
-            name="repeatPassword"
-            type="password"
-            className="border w-full p-2 dark:bg-gray-700 dark:text-white"
-            value={formData.repeatPassword}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 w-full rounded hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"
-        >
-          {t("registration.btnRegister")}
-        </button>
-        <div className="mt-4 text-center text-sm dark:text-white">
-          <span>{t("registration.alreadyRegistered")}</span>{" "}
-          <Link to="/login" className="text-blue-500 hover:text-blue-600">
-            {t("registration.signIn")}
-          </Link>
-        </div>
-      </form>
+      </div>
     </div>
   );
 };

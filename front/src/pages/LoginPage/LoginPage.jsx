@@ -141,7 +141,7 @@ export const LoginPage = () => {
                 onClick={handleCancel}
               />
             </div>
-            <p className="mt-2 text-center text-sm">
+            <p className="mt-2 text-gray-600 dark:text-gray-300 text-center">
               {t("login.dontHaveAccount")}{" "}
               <Link
                 to="/register"

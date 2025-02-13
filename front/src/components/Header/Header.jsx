@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { useAuth } from "../../context/AuthContext";
+import { Button } from "../Button/Button";
 
 export const Header = () => {
   const { t, i18n } = useTranslation();
@@ -13,8 +14,6 @@ export const Header = () => {
     const selectedLang = event.target.value;
     i18n.changeLanguage(selectedLang);
   };
-
-  const isLoginPage = window.location.pathname === "/login";
 
   const handleSignOut = () => {
     logout();
@@ -30,33 +29,33 @@ export const Header = () => {
       <div className="text-xl font-bold">
         {t("header.title")}
       </div>
-      <div className="relative">
-        <select
-          value={i18n.language}
-          onChange={handleLanguageChange}
-          className="px-3 py-1 bg-white text-black border border-gray-400 rounded dark:bg-gray-700 dark:text-white"
-        >
-          <option value="en">English</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
-      <ThemeToggle />
-      <div>
-        {isAuthenticated ? (
-          <button
-            onClick={handleSignOut}
-            className="px-3 py-1 bg-red-600 text-white rounded dark:bg-red-800"
+      <div className="flex items-center gap-6">
+        <ThemeToggle />
+        <div>
+          <select
+            value={i18n.language}
+            onChange={handleLanguageChange}
+            className="px-3 py-1 bg-white text-black border border-gray-400 rounded dark:bg-gray-700 dark:text-white"
           >
-            {t("header.signOut")}
-          </button>
-        ) : (
-          <button
-            onClick={() => navigate(isLoginPage ? "/register" : "/login")}
-            className="px-3 py-1 bg-purple-600 text-white rounded dark:bg-purple-800"
-          >
-            {isLoginPage ? t("header.register") : t("header.login")}
-          </button>
-        )}
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+          </select>
+        </div>
+        <div>
+          {isAuthenticated ? (
+            <Button
+              buttonType="tertiary"
+              size="medium"
+              onClick={handleSignOut}
+              text={t("header.signOut")} />
+          ) : (
+            <Button
+              buttonType="primary"
+              size="medium"
+              onClick={() => navigate('/login')}
+              text={t("header.login")} />
+          )}
+        </div>
       </div>
     </header>
   );

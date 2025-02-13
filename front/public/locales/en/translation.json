@@ -13,7 +13,11 @@
     "labelConfirmPassword": "Confirm Password",
     "btnRegister": "Register",
     "alreadyRegistered": "Already have an account?",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "placeholderName": "Enter your name",
+    "placeholderEmail": "Enter your email",
+    "placeholderPassword": "Enter your password",
+    "placeholderConfirm": "Confirm your password"
   },
   "login": {
     "title": "Login",

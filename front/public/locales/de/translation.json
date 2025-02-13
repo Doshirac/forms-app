@@ -13,7 +13,11 @@
     "labelConfirmPassword": "Passwort bestätigen",
     "btnRegister": "Registrieren",
     "alreadyRegistered": "Wenn Sie bereits ein Konto haben?",
-    "signIn": "Anmelden"
+    "signIn": "Anmelden",
+    "placeholderName": "Geben Sie Ihren Namen ein",
+    "placeholderEmail": "Geben Sie Ihre E-Mail-Adresse ein",
+    "placeholderPassword": "Geben Sie Ihr Passwort ein",
+    "placeholderConfirm": "Bestätigen Sie Ihr Passwort"
   },
   "login": {
     "title": "Anmeldung",
