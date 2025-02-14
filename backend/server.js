@@ -9,17 +9,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://your-frontend-domain.com",
-];
+// при деплое раскомментить
+// const allowedOrigins = [
+//   "http://localhost:3000",
+//   "http://your-frontend-domain.com",
+// ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: allowedOrigins,
+//     credentials: true,
+//   })
+// );
+
+app.use(cors());
 
 app.use(express.json());
 

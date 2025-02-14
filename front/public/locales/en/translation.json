@@ -57,5 +57,31 @@
     "subtitle": "Powerful Form Builder for Everyone",
     "description": "Build beautiful, interactive forms in minutes. Join our community of creators and start designing your perfect forms today!",
     "getStarted": "Get Started"
+  },
+  "userManagement": {
+    "search": "Search",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "lastLogin": "Last Login",
+      "status": "Status",
+      "admin": "Admin",
+      "yes": "Yes",
+      "no": "No",
+      "na": "N/A",
+      "sortDesc": "sorted descending",
+      "sortAsc": "sorted ascending"
+    },
+    "actions": {
+      "block": "Block users",
+      "unblock": "Unblock users",
+      "delete": "Delete users",
+      "grant-admin": "Grant admin rights",
+      "revoke-admin": "Revoke admin rights"
+    },
+    "messages": {
+      "success": "The action '{{action}}' was successful",
+      "error": "Failed to execute action '{{action}}'"
+    }
   }
 }

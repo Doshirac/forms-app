@@ -57,5 +57,31 @@
     "subtitle": "Leistungsstarker Formular-Builder für alle",
     "description": "Erstellen Sie schöne, interaktive Formulare in wenigen Minuten. Werden Sie Teil unserer Community und beginnen Sie noch heute mit dem Design Ihrer perfekten Formulare!",
     "getStarted": "Anmelden"
+  },
+  "userManagement": {
+    "search": "Benutzer",
+    "table": {
+      "name": "Name",
+      "email": "E-Mail",
+      "lastLogin": "Letzter Login",
+      "status": "Status",
+      "admin": "Admin",
+      "yes": "Ja",
+      "no": "Nein",
+      "na": "K.A.",
+      "sortDesc": "absteigend sortiert",
+      "sortAsc": "aufsteigend sortiert"
+    },
+    "actions": {
+      "block": "Benutzer blockieren",
+      "unblock": "Benutzer entsperren",
+      "delete": "Benutzer löschen",
+      "grantAdmin": "Adminrechte gewähren",
+      "revokeAdmin": "Adminrechte entziehen"
+    },
+    "messages": {
+      "success": "Die Aktion '{{action}}' wurde erfolgreich ausgeführt",
+      "error": "Fehler bei der Aktion '{{action}}'"
+    }
   }
 }

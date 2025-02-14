@@ -26,6 +26,7 @@ import { ReactComponent as LockIcon } from "../../assets/images/lock_person.svg"
 import { ReactComponent as UnlockIcon } from "../../assets/images/lock_open.svg";
 import { ReactComponent as GrantIcon } from "../../assets/images/grant_admin.svg";
 import { ReactComponent as RevokeIcon } from "../../assets/images/revoke_admin.svg";
+import { useTranslation } from "react-i18next";
 
 export const UserManagementTable = () => {
     const [users, setUsers] = useState([]);
@@ -37,6 +38,7 @@ export const UserManagementTable = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const { fetchWithAuth } = useFetchWithAuth();
     const [error, setError] = useState(null);
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetchUsers();
@@ -70,10 +72,13 @@ export const UserManagementTable = () => {
         if (response.ok) {
             fetchUsers();
             setSelectedUsers([]);
-            alert(`The ${action} operation is successfully performed.`);
+            alert(t("userManagement.messages.success", { 
+                action: t(`userManagement.actions.${action}`).toLowerCase()
+            }));
         } else {
-            alert(`Failed to ${action} users`);
-            console.error(`Failed to ${action} users`);
+            alert(t("userManagement.messages.error", { 
+                action: t(`userManagement.actions.${action}`).toLowerCase()
+            }));
         }
         } catch (error) {
         console.error("Error updating users:", error);
@@ -153,16 +158,26 @@ export const UserManagementTable = () => {
                 <TextField
                     variant="outlined"
                     size="small"
-                    label="Search"
+                    label={t("userManagement.search")}
                     value={searchTerm}
                     onChange={handleSearchTermChange}
                     className="bg-white dark:bg-gray-600 dark:focus:ring-yellow-500"
                 />
-                <Button onClick={() => handleAction("block")} text={<LockIcon className="w-1/2 h-1/2 m-auto" />}/>
-                <Button onClick={() => handleAction("unblock")} text={<UnlockIcon className="w-1/2 h-1/2 m-auto" />}/>
-                <Button onClick={() => handleAction("delete")} text={<DeleteIcon className="w-1/2 h-1/2 m-auto" />}/>
-                <Button onClick={() => handleAction("grant-admin")} text={<GrantIcon className="w-1/2 h-1/2 m-auto" />}/>
-                <Button onClick={() => handleAction("revoke-admin")} text={<RevokeIcon className="w-1/2 h-1/2 m-auto" />}/>
+                <Tooltip title={t("userManagement.actions.block")}>
+                    <Button onClick={() => handleAction("block")} text={<LockIcon className="w-1/2 h-1/2 m-auto" />}/>
+                </Tooltip>
+                <Tooltip title={t("userManagement.actions.unblock")}>
+                    <Button onClick={() => handleAction("unblock")} text={<UnlockIcon className="w-1/2 h-1/2 m-auto" />}/>
+                </Tooltip>
+                <Tooltip title={t("userManagement.actions.delete")}>
+                    <Button onClick={() => handleAction("delete")} text={<DeleteIcon className="w-1/2 h-1/2 m-auto" />}/>
+                </Tooltip>
+                <Tooltip title={t("userManagement.actions.grantAdmin")}>
+                    <Button onClick={() => handleAction("grant-admin")} text={<GrantIcon className="w-1/2 h-1/2 m-auto" />}/>
+                </Tooltip>
+                <Tooltip title={t("userManagement.actions.revokeAdmin")}>
+                    <Button onClick={() => handleAction("revoke-admin")} text={<RevokeIcon className="w-1/2 h-1/2 m-auto" />}/>
+                </Tooltip>
             </Box>
         </Toolbar>
         <TableContainer className="text-gray-900 dark:text-gray-100">
@@ -191,7 +206,7 @@ export const UserManagementTable = () => {
                         onClick={(e) => handleRequestSort(e, "name")}
                         sx={tableSortLabelStyles}
                     >
-                    Name
+                    {t("userManagement.table.name")}
                     {orderBy === "name" ? (
                         <Box component="span" sx={visuallyHidden}>
                             {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -207,7 +222,7 @@ export const UserManagementTable = () => {
                         onClick={(e) => handleRequestSort(e, "email")}
                         sx={tableSortLabelStyles}
                     >
-                    Email
+                    {t("userManagement.table.email")}
                     {orderBy === "email" ? (
                         <Box component="span" sx={visuallyHidden}>
                             {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -223,7 +238,7 @@ export const UserManagementTable = () => {
                         onClick={(e) => handleRequestSort(e, "last_login")}
                         sx={tableSortLabelStyles}
                     >
-                    Last Login
+                    {t("userManagement.table.lastLogin")}
                     {orderBy === "last_login" ? (
                         <Box component="span" sx={visuallyHidden}>
                             {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -239,7 +254,7 @@ export const UserManagementTable = () => {
                         onClick={(e) => handleRequestSort(e, "status")}
                         sx={tableSortLabelStyles}
                     >
-                    Status
+                    {t("userManagement.table.status")}
                     {orderBy === "status" ? (
                         <Box component="span" sx={visuallyHidden}>
                             {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -255,7 +270,7 @@ export const UserManagementTable = () => {
                         onClick={(e) => handleRequestSort(e, "is_admin")}
                         sx={tableSortLabelStyles}
                     >
-                    Admin
+                    {t("userManagement.table.admin")}
                     {orderBy === "is_admin" ? (
                         <Box component="span" sx={visuallyHidden}>
                             {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -311,7 +326,7 @@ export const UserManagementTable = () => {
                             ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                             : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                         }`}>
-                        {user.is_admin ? 'Yes' : 'No'}
+                        {user.is_admin ? t("userManagement.table.yes") : t("userManagement.table.no")}
                         </span>
                     </TableCell>
                     </TableRow>
@@ -338,11 +353,16 @@ export const UserManagementTable = () => {
                 },
                 '& .MuiIconButton-root .MuiSvgIcon-root': {
                     fill: 'currentColor',
+                    color: 'inherit',
                 },
                 '& .MuiTablePagination-select': {
                     color: 'inherit',
                 },
                 '& .MuiTablePagination-selectIcon': {
+                    color: 'inherit',
+                },
+                '& .MuiTablePagination-actions .MuiIconButton-root .MuiSvgIcon-root': {
+                    fill: 'currentColor',
                     color: 'inherit',
                 },
             }}
