@@ -50,5 +50,11 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "contact": "Contact Us"
+  },
+  "home": {
+    "title": "Create Forms Easily",
+    "subtitle": "Powerful Form Builder for Everyone",
+    "description": "Build beautiful, interactive forms in minutes. Join our community of creators and start designing your perfect forms today!",
+    "getStarted": "Get Started"
   }
 }

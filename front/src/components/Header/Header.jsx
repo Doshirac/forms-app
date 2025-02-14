@@ -42,18 +42,12 @@ export const Header = () => {
           </select>
         </div>
         <div>
-          {isAuthenticated ? (
+          {isAuthenticated && (
             <Button
-              buttonType="tertiary"
-              size="medium"
-              onClick={handleSignOut}
-              text={t("header.signOut")} />
-          ) : (
-            <Button
-              buttonType="primary"
-              size="medium"
-              onClick={() => navigate('/login')}
-              text={t("header.login")} />
+            buttonType="tertiary"
+            size="medium"
+            onClick={handleSignOut}
+            text={t("header.signOut")} />
           )}
         </div>
       </div>

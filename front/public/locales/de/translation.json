@@ -50,5 +50,11 @@
     "privacy": "Datenschutzrichtlinie",
     "terms": "Nutzungsbedingungen",
     "contact": "Kontaktieren Sie uns"
+  },
+  "home": {
+    "title": "Formulare einfach erstellen",
+    "subtitle": "Leistungsstarker Formular-Builder für alle",
+    "description": "Erstellen Sie schöne, interaktive Formulare in wenigen Minuten. Werden Sie Teil unserer Community und beginnen Sie noch heute mit dem Design Ihrer perfekten Formulare!",
+    "getStarted": "Anmelden"
   }
 }

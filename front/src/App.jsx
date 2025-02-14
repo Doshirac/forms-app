@@ -5,6 +5,7 @@ import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Footer } from "./components/Footer/Footer";
+import { HomePage } from "./pages/HomePage/HomePage";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegistrationPage />} />
-              <Route path="/" element={<div>Home Page</div>} />
+              <Route path="/" element={<HomePage />} />
             </Routes>
             <Footer />
           </div>
