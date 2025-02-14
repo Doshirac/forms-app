@@ -77,7 +77,12 @@ router.post("/login", async (req, res) => {
       user.rows[0].id,
     ]);
 
-    res.status(200).json({ token, user: user.rows[0] });
+    res.status(200).json({ 
+      token, 
+      user: {
+        is_admin: user.rows[0].is_admin || false
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

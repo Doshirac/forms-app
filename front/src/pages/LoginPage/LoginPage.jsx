@@ -46,16 +46,13 @@ export const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         const data = await response.json();
-        login(data.token);
-        navigate("/");
+        login(data.token, data.user);
+        navigate("/dashboard");
       } else {
         const data = await response.json();
         setErrorMessage(data.message || "Login failed");

@@ -3,7 +3,8 @@
     "title": "My App",
     "login": "Login",
     "register": "Register",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "userManagement": "User Management"
   },
   "registration": {
     "title": "Registration",
