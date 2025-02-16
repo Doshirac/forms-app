@@ -1,0 +1,26 @@
+{
+  "auth": {
+    "noAuthHeader": "Authorization header is missing",
+    "noToken": "Authentication token is missing",
+    "invalidToken": "Invalid or expired token",
+    "userNotFound": "User not found",
+    "accountBlocked": "Your account has been blocked",
+    "emailExists": "Email already exists",
+    "serverError": "Server error occurred",
+    "invalidCredentials": "Invalid email or password",
+    "registerSuccess": "Registration successful",
+    "loginSuccess": "Login successful"
+  },
+  "users": {
+    "fetchError": "Error fetching users",
+    "updateError": "Error updating users",
+    "deleteError": "Error deleting users",
+    "blockSuccess": "Successfully blocked selected users",
+    "unblockSuccess": "Successfully unblocked selected users",
+    "deleteSuccess": "Successfully deleted selected users",
+    "grantAdminSuccess": "Successfully granted admin rights",
+    "revokeAdminSuccess": "Successfully revoked admin rights",
+    "unauthorized": "Unauthorized: Admin privileges required",
+    "notFound": "Selected users not found"
+  }
+}

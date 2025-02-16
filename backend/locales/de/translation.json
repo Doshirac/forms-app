@@ -1,0 +1,26 @@
+{
+  "auth": {
+    "noAuthHeader": "Autorisierungs-Header fehlt",
+    "noToken": "Authentifizierungstoken fehlt",
+    "invalidToken": "Ungültiger oder abgelaufener Token",
+    "userNotFound": "Benutzer nicht gefunden",
+    "accountBlocked": "Ihr Konto wurde gesperrt",
+    "emailExists": "E-Mail existiert bereits",
+    "serverError": "Serverfehler aufgetreten",
+    "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    "registerSuccess": "Registrierung erfolgreich",
+    "loginSuccess": "Anmeldung erfolgreich"
+  },
+  "users": {
+    "fetchError": "Fehler beim Abrufen der Benutzer",
+    "updateError": "Fehler beim Aktualisieren der Benutzer",
+    "deleteError": "Fehler beim Löschen der Benutzer",
+    "blockSuccess": "Ausgewählte Benutzer erfolgreich blockiert",
+    "unblockSuccess": "Ausgewählte Benutzer erfolgreich entsperrt",
+    "deleteSuccess": "Ausgewählte Benutzer erfolgreich gelöscht",
+    "grantAdminSuccess": "Administratorrechte erfolgreich gewährt",
+    "revokeAdminSuccess": "Administratorrechte erfolgreich entzogen",
+    "unauthorized": "Nicht autorisiert: Administratorrechte erforderlich",
+    "notFound": "Ausgewählte Benutzer nicht gefunden"
+  }
+}

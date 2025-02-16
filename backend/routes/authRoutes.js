@@ -1,5 +1,6 @@
 const express = require("express");
-const pool = require("../models/db")
+const pool = require("../models/db");
+const { i18next } = require("../i18n");
 const {
     hashPasswordWithRandomSalt
   } = require("../uitls/hashPasswordWithRandomSalt");
@@ -31,16 +32,20 @@ router.post("/register", async (req, res) => {
     const token = generateToken(newUser);
 
     res.status(201).json({
-      message: "User registered successfully",
+      message: req.t('auth.registerSuccess'),
       token,
       user: newUser,
     });
   } catch (error) {
     if (error.code === "23505") {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ 
+        message: req.t('auth.emailExists')
+      });
     }
     console.error("Error registering user:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ 
+      message: req.t('auth.serverError')
+    });
   }
 });
 
@@ -48,29 +53,28 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await pool.query("SELECT * FROM Users WHERE email = $1", [
-      email,
-    ]);
+    const user = await pool.query("SELECT * FROM Users WHERE email = $1", [email]);
 
     if (user.rows.length === 0) {
-      return res
-        .status(401)
-        .json({ message: "Enter valid email and password" });
+      return res.status(401).json({ 
+        message: req.t('auth.invalidCredentials')
+      });
     }
 
     const validPassword = await verifyPassword(password, user.rows[0].password);
 
     if (!validPassword) {
-      return res.status(401).json({ message: "Invalid password" });
-    }
-
-    if (user.rows[0].email !== email) {
-      return res.status(401).json({ message: "Invalid email" });
+      return res.status(401).json({ 
+        message: req.t('auth.invalidCredentials')
+      });
     }
 
     if (user.rows[0].status === "blocked") {
-      return res.status(403).json({ message: "Your account is blocked." });
+      return res.status(403).json({ 
+        message: req.t('auth.accountBlocked')
+      });
     }
+
     const token = generateToken(user.rows[0]);
 
     await pool.query("UPDATE Users SET last_login = NOW() WHERE id = $1", [
@@ -78,13 +82,17 @@ router.post("/login", async (req, res) => {
     ]);
 
     res.status(200).json({ 
+      message: req.t('auth.loginSuccess'),
       token, 
       user: {
         is_admin: user.rows[0].is_admin || false
       }
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Login error:", error);
+    res.status(500).json({ 
+      message: req.t('auth.serverError')
+    });
   }
 });
 

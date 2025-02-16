@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Button/Button";
 
 export const RegistrationPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -24,16 +24,20 @@ export const RegistrationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.repeatPassword) {
-      setErrorMessage("Passwords do not match");
+      setErrorMessage(t("errors.registration.passwordMismatch"));
       return;
     }
 
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        "X-Language": i18n.language || 'en'
+      };
+      
       const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: 'include',
+        headers,
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,

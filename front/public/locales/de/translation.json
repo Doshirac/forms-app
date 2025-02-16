@@ -34,15 +34,11 @@
   },
   "errors": {
     "login": {
-      "invalidCredentials": "Ungültige E-Mail oder Passwort",
-      "serverError": "Serverfehler aufgetreten",
       "accountBlocked": "Ihr Konto ist gesperrt",
       "generic": "Anmeldung fehlgeschlagen"
     },
     "registration": {
-      "emailExists": "E-Mail existiert bereits",
-      "passwordMismatch": "Passwörter stimmen nicht überein",
-      "serverError": "Serverfehler aufgetreten",
+      "passwordMismatch": "Passwörter stimmen nicht überein", 
       "generic": "Registrierung fehlgeschlagen"
     }
   },

@@ -13,7 +13,7 @@ function App() {
     <AuthProvider>
       <ThemeProvider>
         <Router>
-          <div className="App">
+          <div>
             <Header />
             <Routes>
               <Route path="/login" element={<LoginPage />} />

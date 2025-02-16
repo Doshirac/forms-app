@@ -10,7 +10,9 @@ router.get("/", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error fetching users" });
+    res.status(500).json({ 
+      message: req.t('users.fetchError')
+    });
   }
 });
 
@@ -21,10 +23,14 @@ router.post("/block", async (req, res) => {
       "UPDATE Users SET status = 'blocked' WHERE id = ANY($1::int[])",
       [userIds]
     );
-    res.status(200).json({ message: "Users blocked successfully" });
+    res.status(200).json({ 
+      message: req.t('users.blockSuccess')
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error blocking users" });
+    res.status(500).json({ 
+      message: req.t('users.updateError')
+    });
   }
 });
 
@@ -35,10 +41,14 @@ router.post("/unblock", async (req, res) => {
       "UPDATE Users SET status = 'active' WHERE id = ANY($1::int[])",
       [userIds]
     );
-    res.status(200).json({ message: "Users unblocked successfully" });
+    res.status(200).json({ 
+      message: req.t('users.unblockSuccess')
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error unblocking users" });
+    res.status(500).json({ 
+      message: req.t('users.updateError')
+    });
   }
 });
 
@@ -46,9 +56,14 @@ router.delete("/delete", async (req, res) => {
   const { userIds } = req.body;
   try {
     await pool.query("DELETE FROM Users WHERE id = ANY($1::int[])", [userIds]);
-    res.status(200).json({ message: "Users deleted successfully" });
+    res.status(200).json({ 
+      message: req.t('users.deleteSuccess')
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting users" });
+    console.error(error);
+    res.status(500).json({ 
+      message: req.t('users.deleteError')
+    });
   }
 });
 
@@ -63,17 +78,23 @@ router.post("/grant-admin", async (req, res) => {
     );
 
     if (!adminCheck.rows[0].is_admin) {
-      return res.status(403).json({ message: "Unauthorized: Requires admin privileges" });
+      return res.status(403).json({ 
+        message: req.t('users.unauthorized')
+      });
     }
 
     await pool.query(
       "UPDATE Users SET is_admin = true WHERE id = ANY($1::int[])",
       [userIds]
     );
-    res.status(200).json({ message: "Admin privileges granted successfully" });
+    res.status(200).json({ 
+      message: req.t('users.grantAdminSuccess')
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error granting admin privileges" });
+    res.status(500).json({ 
+      message: req.t('users.updateError')
+    });
   }
 });
 
@@ -88,17 +109,23 @@ router.post("/revoke-admin", async (req, res) => {
     );
 
     if (!adminCheck.rows[0].is_admin) {
-      return res.status(403).json({ message: "Unauthorized: Requires admin privileges" });
+      return res.status(403).json({ 
+        message: req.t('users.unauthorized')
+      });
     }
 
     await pool.query(
       "UPDATE Users SET is_admin = false WHERE id = ANY($1::int[])",
       [userIds]
     );
-    res.status(200).json({ message: "Admin privileges revoked successfully" });
+    res.status(200).json({ 
+      message: req.t('users.revokeAdminSuccess')
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error revoking admin privileges" });
+    res.status(500).json({ 
+      message: req.t('users.updateError')
+    });
   }
 });
 

@@ -8,7 +8,7 @@ import { ReactComponent as HidePasswordIcon } from "../../assets/images/visibili
 import { ReactComponent as PersonIcon } from "../../assets/images/person.svg";
 
 export const LoginPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -41,25 +41,29 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const headers = {
+        "Content-Type": "application/json",
+        "X-Language": i18n.language || 'en'
+      };
+
       const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        credentials: 'include',
+        headers,
+        body: JSON.stringify(formData)
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
         login(data.token, data.user);
         navigate("/dashboard");
       } else {
-        const data = await response.json();
-        setErrorMessage(data.message || "Login failed");
+        setErrorMessage(data.message || t("errors.login.generic"));
       }
     } catch (error) {
       console.error(error);
-      setErrorMessage("Login failed");
+      setErrorMessage(t("errors.login.generic"));
     }
   };
 

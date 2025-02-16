@@ -8,10 +8,11 @@ const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader)
-      return res.status(401).json({ message: "No authorization header" });
+      return res.status(401).json({ message: req.t('auth.noAuthHeader') });
 
     const token = authHeader.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "No token provided" });
+    if (!token) 
+      return res.status(401).json({ message: req.t('auth.noToken') });
 
     const decoded = jwt.verify(token, secretKey);
 
@@ -19,15 +20,16 @@ const authMiddleware = async (req, res, next) => {
       decoded.id,
     ]);
     const user = rows[0];
-    if (!user) return res.status(401).json({ message: "User not found" });
+    if (!user) 
+      return res.status(401).json({ message: req.t('auth.userNotFound') });
     if (user.status !== "active")
-      return res.status(403).json({ message: "Your account is blocked" });
+      return res.status(403).json({ message: req.t('auth.accountBlocked') });
 
     req.user = user;
     next();
   } catch (error) {
     console.error("authMiddleware error:", error);
-    return res.status(401).json({ message: "Invalid token" });
+    return res.status(401).json({ message: req.t('auth.invalidToken') });
   }
 };
 
