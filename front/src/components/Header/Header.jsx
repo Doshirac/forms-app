@@ -30,22 +30,42 @@ export const Header = () => {
       <div className="text-xl font-bold cursor-pointer" onClick={() => navigate('/')}>
         {t("header.title")}
       </div>
-      
-      {isAuthenticated && isAdmin && (
+      {isAuthenticated && (
         <nav className="flex gap-4">
           <NavLink
-            to="/user-management"
-            className={({ isActive }) => 
+            to="/account"
+            className={({ isActive }) =>
               `hover:text-yellow-500 transition-colors ${
-                isActive ? 'text-yellow-500' : ''
+                isActive ? "text-yellow-500" : ""
               }`
             }
           >
-            {t("header.userManagement")}
+            {t("header.myAccount")}
           </NavLink>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              `hover:text-yellow-500 transition-colors ${
+                isActive ? "text-yellow-500" : ""
+              }`
+            }
+          >
+            {t("header.dashboard")}
+          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/user-management"
+              className={({ isActive }) =>
+                `hover:text-yellow-500 transition-colors ${
+                  isActive ? "text-yellow-500" : ""
+                }`
+              }
+            >
+              {t("header.userManagement")}
+            </NavLink>
+          )}
         </nav>
       )}
-
       <div className="flex items-center gap-6">
         <ThemeToggle />
         <div>

@@ -4,7 +4,9 @@
     "login": "Login",
     "register": "Register",
     "signOut": "Sign Out",
-    "userManagement": "User Management"
+    "userManagement": "User Management",
+    "dashboard": "Dashboard",
+    "myAccount": "Account"
   },
   "registration": {
     "title": "Registration",

@@ -4,7 +4,9 @@
     "login": "Anmelden",
     "register": "Registrieren",
     "signOut": "Abmelden",
-    "userManagement": "Benutzerverwaltung"
+    "userManagement": "Benutzerverwaltung",
+    "dashboard": "Dashboard",
+    "myAccount": "Konto"
   },
   "registration": {
     "title": "Registrierung",

@@ -172,10 +172,10 @@ export const UserManagementTable = () => {
                 <Tooltip title={t("userManagement.actions.delete")}>
                     <Button onClick={() => handleAction("delete")} text={<DeleteIcon className="w-1/2 h-1/2 m-auto" />}/>
                 </Tooltip>
-                <Tooltip title={t("userManagement.actions.grantAdmin")}>
+                <Tooltip title={t("userManagement.actions.grant-admin")}>
                     <Button onClick={() => handleAction("grant-admin")} text={<GrantIcon className="w-1/2 h-1/2 m-auto" />}/>
                 </Tooltip>
-                <Tooltip title={t("userManagement.actions.revokeAdmin")}>
+                <Tooltip title={t("userManagement.actions.revoke-admin")}>
                     <Button onClick={() => handleAction("revoke-admin")} text={<RevokeIcon className="w-1/2 h-1/2 m-auto" />}/>
                 </Tooltip>
             </Box>
