@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
-import { Model, StylesManager } from "survey-core";
+import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.css";
+import { FlatDark, FlatLight } from "survey-core/themes";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
-
-StylesManager.applyTheme("defaultV2");
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Run = () => {
   const { id } = useParams();
   const [surveyData, setSurveyData] = useState(null);
-    const { fetchWithAuth } = useFetchWithAuth();
+  const { fetchWithAuth } = useFetchWithAuth();
+  const { darkTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     async function loadSurvey() {
@@ -35,6 +36,12 @@ const Run = () => {
 
   const surveyModel = new Model(surveyData.json);
 
+  if (darkTheme) {
+    surveyModel.applyTheme(FlatDark);
+  } else {
+    surveyModel.applyTheme(FlatLight);
+  }
+
   surveyModel.onComplete.add(async (sender) => {
     const results = sender.data;
     try {
@@ -56,7 +63,6 @@ const Run = () => {
 
   return (
     <div>
-      <h1>{surveyData.name}</h1>
       <Survey model={surveyModel} />
     </div>
   );
