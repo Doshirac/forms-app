@@ -33,7 +33,7 @@ export const Header = () => {
       {isAuthenticated && (
         <nav className="flex gap-4">
           <NavLink
-            to="/account"
+            to="/content"
             className={({ isActive }) =>
               `hover:text-yellow-500 transition-colors ${
                 isActive ? "text-yellow-500" : ""

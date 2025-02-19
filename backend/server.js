@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const surveyRoutes = require("./routes/surveyRoutes");
 const authMiddleware = require("./middlewares/authMiddleware");
 const languageMiddleware = require("./middlewares/languageMiddleware");
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(languageMiddleware);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/surveys", authMiddleware, surveyRoutes);
 app.use("/api/users", authMiddleware, userRoutes);
 
 app.listen(PORT, "0.0.0.0", () => {
