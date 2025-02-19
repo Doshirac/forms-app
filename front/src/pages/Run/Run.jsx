@@ -6,12 +6,14 @@ import "survey-core/defaultV2.css";
 import { FlatDark, FlatLight } from "survey-core/themes";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 const Run = () => {
   const { id } = useParams();
   const [surveyData, setSurveyData] = useState(null);
   const { fetchWithAuth } = useFetchWithAuth();
   const { darkTheme } = useContext(ThemeContext);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     async function loadSurvey() {
@@ -35,6 +37,7 @@ const Run = () => {
   }
 
   const surveyModel = new Model(surveyData.json);
+  surveyModel.locale = i18n.language;
 
   if (darkTheme) {
     surveyModel.applyTheme(FlatDark);

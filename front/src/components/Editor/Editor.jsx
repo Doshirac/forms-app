@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SurveyCreator, SurveyCreatorComponent } from "survey-creator-react";
 import "survey-creator-core/survey-creator-core.css";
+import "survey-core/i18n/german";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 
 const Editor = ({ id }) => {
