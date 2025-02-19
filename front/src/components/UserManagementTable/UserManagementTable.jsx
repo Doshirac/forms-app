@@ -16,9 +16,9 @@ import {
     Box,
 } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { getRelativeTime } from "./helpers/time/getRelativeTime";
-import { getComparator } from "./helpers/sorting/getComparator";
-import { stableSort } from "./helpers/sorting/stableSort";
+import { getRelativeTime } from "../../utils/getRelativeTime";
+import { getComparator } from "../../utils/getComparator";
+import { stableSort } from "../../utils/stableSort";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 import { Button } from "../Button/Button";
 import { ReactComponent as DeleteIcon } from "../../assets/images/delete.svg";
