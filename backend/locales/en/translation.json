@@ -22,5 +22,11 @@
     "revokeAdminSuccess": "Successfully revoked admin rights",
     "unauthorized": "Unauthorized: Admin privileges required",
     "notFound": "Selected users not found"
+  },
+  "surveys": {
+    "serverError": "Server error",
+    "noCreator": "Forbidden: No creator or admin",
+    "notFound": "Survey not found",
+    "missingResult": "Missing 'surveyResult'"
   }
 }

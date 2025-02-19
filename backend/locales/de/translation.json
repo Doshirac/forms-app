@@ -22,5 +22,11 @@
     "revokeAdminSuccess": "Administratorrechte erfolgreich entzogen",
     "unauthorized": "Nicht autorisiert: Administratorrechte erforderlich",
     "notFound": "Ausgewählte Benutzer nicht gefunden"
+  },
+  "surveys": {
+    "serverError": "Serverfehler",
+    "noCreator": "Verboten: Kein Ersteller oder Administrator",
+    "notFound": "Umfrage nicht gefunden",
+    "missingResult": "Fehlendes 'Umfrageergebnis'"
   }
 }

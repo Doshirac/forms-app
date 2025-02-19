@@ -81,5 +81,13 @@
       "success": "Die Aktion '{{action}}' wurde erfolgreich ausgeführt",
       "error": "Fehler bei der Aktion '{{action}}'"
     }
+  },
+  "surveys": {
+    "name": "Name der Umfrage",
+    "description": "Beschreibung",
+    "tags": "Tags",
+    "noDescription": "Keine Beschreibung",
+    "noTags": "Keine Tags",
+    "search": "Suchumfragen"
   }
 }

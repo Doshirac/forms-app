@@ -81,5 +81,13 @@
       "success": "The action '{{action}}' was successful",
       "error": "Failed to execute action '{{action}}'"
     }
+  },
+  "surveys": {
+    "name": "Survey Name",
+    "description": "Description",
+    "tags": "Tags",
+    "noDescription": "No description",
+    "noTags": "No tags",
+    "search": "Search Surveys"
   }
 }

@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
     res.status(201).json(rows[0]);
   } catch (error) {
     console.error("Error creating survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
 
@@ -80,7 +80,7 @@ router.put("/:id", async (req, res) => {
   const { name, json } = req.body
   const hasPermission = await canModifySurvey(req, id);
   if (!hasPermission) {
-    return res.status(403).json({ error: "Forbidden: Not creator or admin" });
+    return res.status(403).json({ error: req.t('surveys.noCreator') });
   }
 
   try {
@@ -98,12 +98,12 @@ router.put("/:id", async (req, res) => {
       id
     ]);
     if (rows.length === 0) {
-      return res.status(404).json({ error: "Survey not found" });
+      return res.status(404).json({ error: req.t('surveys.notFound') });
     }
     res.json(rows[0]);
   } catch (error) {
     console.error("Error updating survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
 
@@ -111,7 +111,7 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const hasPermission = await canModifySurvey(req, id);
   if (!hasPermission) {
-    return res.status(403).json({ error: "Forbidden: Not creator or admin" });
+    return res.status(403).json({ error: req.t('surveys.noCreator') });
   }
 
   try {
@@ -120,12 +120,12 @@ router.delete("/:id", async (req, res) => {
       [id]
     );
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Survey not found" });
+      return res.status(404).json({ error: req.t('surveys.notFound') });
     }
     res.json({ message: `Survey ${id} deleted`, deleted: result.rows[0] });
   } catch (error) {
     console.error("Error deleting survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
 
@@ -135,13 +135,13 @@ router.post("/:id/results", async (req, res) => {
   const { id: userId } = req.user;
 
   if (!surveyResult) {
-    return res.status(400).json({ error: "Missing 'surveyResult'" });
+    return res.status(400).json({ error: req.t('surveys.missingResult') });
   }
 
   try {
     const check = await pool.query("SELECT id FROM Surveys WHERE id=$1", [id]);
     if (check.rows.length === 0) {
-      return res.status(404).json({ error: "Survey not found" });
+      return res.status(404).json({ error: req.t('surveys.notFound') });
     }
 
     const insertQuery = `
@@ -153,7 +153,7 @@ router.post("/:id/results", async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error("Error posting survey results:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
 
@@ -161,7 +161,7 @@ router.get("/:id/results", async (req, res) => {
   const { id } = req.params;
   const hasPermission = await canModifySurvey(req, id);
   if (!hasPermission) {
-    return res.status(403).json({ error: "Forbidden: Not creator or admin" });
+    return res.status(403).json({ error: req.t('surveys.noCreator') });
   }
 
   try {
@@ -170,7 +170,7 @@ router.get("/:id/results", async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error("Error retrieving results:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
 

@@ -26,6 +26,7 @@ import { ReactComponent as EditIcon } from "../../assets/images/edit.svg";
 import { ReactComponent as PlayIcon } from "../../assets/images/play.svg";
 import { ReactComponent as AddIcon } from "../../assets/images/add.svg";
 import { ReactComponent as ResultIcon } from "../../assets/images/result.svg";
+import { useTranslation } from "react-i18next";
 
 
 export default function Surveys() {
@@ -39,6 +40,7 @@ export default function Surveys() {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
   const [status, setStatus] = useState("idle");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (status === "idle") {
@@ -178,7 +180,7 @@ export default function Surveys() {
           <TextField
             variant="outlined"
             size="small"
-            label="Search Surveys"
+            label={t("surveys.search")}
             value={searchTerm}
             onChange={handleSearchTermChange}
             className="bg-white dark:bg-gray-600 dark:focus:ring-yellow-500"
@@ -230,7 +232,7 @@ export default function Surveys() {
                   onClick={(e) => handleRequestSort(e, "name")}
                   sx={tableSortLabelStyles}
                 >
-                  Survey Name
+                  {t("surveys.name")}
                   {orderBy === "name" && (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -245,7 +247,7 @@ export default function Surveys() {
                   onClick={(e) => handleRequestSort(e, "description")}
                   sx={tableSortLabelStyles}
                 >
-                  Description
+                  {t("surveys.description")}
                   {orderBy === "description" && (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -260,7 +262,7 @@ export default function Surveys() {
                   onClick={(e) => handleRequestSort(e, "tags")}
                   sx={tableSortLabelStyles}
                 >
-                  Tags
+                  {t("surveys.tags")}
                   {orderBy === "tags" && (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -290,10 +292,10 @@ export default function Surveys() {
                   </TableCell>
                   <TableCell className="dark:text-gray-100">{survey.name}</TableCell>
                   <TableCell className="dark:text-gray-100">
-                    {survey.description || "No description"}
+                    {survey.description || t("surveys.noDescription")}
                   </TableCell>
                   <TableCell className="dark:text-gray-100">
-                    {survey.tags || "No tags"}
+                    {survey.tags || t("surveys.noTags")}
                   </TableCell>
                 </TableRow>
               );
