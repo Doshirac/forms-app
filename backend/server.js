@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const surveyRoutes = require("./routes/surveyRoutes");
+const likesRoutes = require("./routes/likesRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 const authMiddleware = require("./middlewares/authMiddleware");
 const languageMiddleware = require("./middlewares/languageMiddleware");
 
@@ -25,6 +27,9 @@ app.use(languageMiddleware);
 app.use("/api/auth", authRoutes);
 app.use("/api/surveys", authMiddleware, surveyRoutes);
 app.use("/api/users", authMiddleware, userRoutes);
+
+app.use("/api/surveys", authMiddleware, commentRoutes);
+app.use("/api/surveys", authMiddleware, likesRoutes);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is accessible on port ${PORT}`);
