@@ -51,7 +51,6 @@ export const UserManagementTable = () => {
             throw new Error(`Failed to fetch users: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log('Fetched users:', data);
         setUsers(data);
         } catch (error) {
         console.error("Error fetching users:", error);
