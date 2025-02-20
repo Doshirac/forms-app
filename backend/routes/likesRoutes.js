@@ -2,20 +2,17 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../models/db");
 
-// GET likes info for a survey (e.g. totalLikes, hasLiked)
 router.get("/:surveyId/likes", async (req, res) => {
   const { surveyId } = req.params;
   const { id: userId } = req.user;
   
   try {
-    // total likes
     const totalRes = await pool.query(
       "SELECT COUNT(*)::int AS total_likes FROM Likes WHERE survey_id = $1",
       [surveyId]
     );
     const totalLikes = totalRes.rows[0].total_likes;
-    
-    // check if current user liked
+
     const userRes = await pool.query(
       "SELECT 1 FROM Likes WHERE survey_id = $1 AND user_id = $2",
       [surveyId, userId]
@@ -29,7 +26,6 @@ router.get("/:surveyId/likes", async (req, res) => {
   }
 });
 
-// POST => user likes the survey
 router.post("/:surveyId/like", async (req, res) => {
   const { surveyId } = req.params;
   const { id: userId } = req.user;
@@ -42,7 +38,6 @@ router.post("/:surveyId/like", async (req, res) => {
       RETURNING id
     `;
     const { rows } = await pool.query(sql, [surveyId, userId]);
-    // If rows is empty, means user already liked or conflict
     const liked = rows.length > 0;
     
     res.json({ success: true, liked });
@@ -52,7 +47,6 @@ router.post("/:surveyId/like", async (req, res) => {
   }
 });
 
-// DELETE => user unlikes the survey
 router.delete("/:surveyId/like", async (req, res) => {
   const { surveyId } = req.params;
   const { id: userId } = req.user;

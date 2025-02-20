@@ -9,12 +9,16 @@ import { FlatDark, FlatLight } from "survey-core/themes";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { Heart } from "lucide-react";
 
 const Run = () => {
   const { id } = useParams();
   const [surveyData, setSurveyData] = useState(null);
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(true);
+  const [totalLikes, setTotalLikes] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
   const { fetchWithAuth } = useFetchWithAuth();
   const { darkTheme } = useContext(ThemeContext);
   const { i18n } = useTranslation();
@@ -36,6 +40,45 @@ const Run = () => {
     loadSurvey();
   }, [id]);
 
+  useEffect(() => {
+    async function loadLikes() {
+      try {
+        const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/likes`);
+        if (!response.ok) {
+          throw new Error("Failed to load likes");
+        }
+        const data = await response.json();
+        setTotalLikes(data.totalLikes);
+        setHasLiked(data.hasLiked);
+      } catch (error) {
+        console.error("Error loading likes:", error);
+      }
+    }
+    loadLikes();
+  }, [id]);
+
+  const handleLikeClick = async () => {
+    if (isLikeLoading) return;
+    
+    setIsLikeLoading(true);
+    try {
+      const method = hasLiked ? 'DELETE' : 'POST';
+      const endpoint = `http://localhost:5000/api/surveys/${id}/like`;
+      
+      const response = await fetchWithAuth(endpoint, { method });
+      if (!response.ok) {
+        throw new Error("Failed to update like");
+      }
+      
+      setHasLiked(!hasLiked);
+      setTotalLikes(prev => hasLiked ? prev - 1 : prev + 1);
+    } catch (error) {
+      console.error("Error updating like:", error);
+    } finally {
+      setIsLikeLoading(false);
+    }
+  };
+
   async function loadComments() {
     try {
       setLoadingComments(true);
@@ -51,6 +94,7 @@ const Run = () => {
       setLoadingComments(false);
     }
   }
+
   useEffect(() => {
     loadComments();
   }, [id]);
@@ -114,6 +158,26 @@ const Run = () => {
 
   return (
     <div>
+      <div className="flex items-center gap-4 mb-6">
+        <button
+          onClick={handleLikeClick}
+          disabled={isLikeLoading}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            darkTheme
+              ? hasLiked
+                ? "bg-yellow-600 text-white"
+                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              : hasLiked
+              ? "bg-green-600 text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          <Heart
+            className={`w-5 h-5 ${hasLiked ? "fill-current" : ""}`}
+          />
+          <span>{totalLikes}</span>
+        </button>
+      </div>
       <Survey model={surveyModel} />
       <div className="mt-8">
         {loadingComments ? (
