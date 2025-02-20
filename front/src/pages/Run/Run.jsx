@@ -10,6 +10,7 @@ import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { Heart } from "lucide-react";
+import usePolling from "../../hooks/usePolling";
 
 const Run = () => {
   const { id } = useParams();
@@ -23,15 +24,13 @@ const Run = () => {
   const { darkTheme } = useContext(ThemeContext);
   const { i18n } = useTranslation();
 
+  // Load initial survey data
   useEffect(() => {
     async function loadSurvey() {
       try {
         const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to load survey");
-        }
+        if (!response.ok) throw new Error("Failed to load survey");
         const data = await response.json();
-        console.log("Survey data loaded:", data);
         setSurveyData(data);
       } catch (error) {
         console.error(error);
@@ -40,22 +39,36 @@ const Run = () => {
     loadSurvey();
   }, [id]);
 
-  useEffect(() => {
-    async function loadLikes() {
-      try {
-        const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/likes`);
-        if (!response.ok) {
-          throw new Error("Failed to load likes");
-        }
-        const data = await response.json();
-        setTotalLikes(data.totalLikes);
-        setHasLiked(data.hasLiked);
-      } catch (error) {
-        console.error("Error loading likes:", error);
-      }
+  // Function to fetch likes
+  const fetchLikes = async () => {
+    try {
+      const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/likes`);
+      if (!response.ok) throw new Error("Failed to load likes");
+      const data = await response.json();
+      setTotalLikes(data.totalLikes);
+      setHasLiked(data.hasLiked);
+    } catch (error) {
+      console.error("Error loading likes:", error);
     }
-    loadLikes();
-  }, [id]);
+  };
+
+  // Function to fetch comments
+  const fetchComments = async () => {
+    try {
+      const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/comments`);
+      if (!res.ok) throw new Error("Failed to load comments");
+      const data = await res.json();
+      setComments(data.comments || []);
+      setLoadingComments(false);
+    } catch (error) {
+      console.error("Comments error:", error);
+      setLoadingComments(false);
+    }
+  };
+
+  // Set up polling for likes and comments
+  usePolling(fetchLikes, 3000, [id]); // Poll likes every 3 seconds
+  usePolling(fetchComments, 4000, [id]); // Poll comments every 4 seconds
 
   const handleLikeClick = async () => {
     if (isLikeLoading) return;
@@ -66,38 +79,20 @@ const Run = () => {
       const endpoint = `http://localhost:5000/api/surveys/${id}/like`;
       
       const response = await fetchWithAuth(endpoint, { method });
-      if (!response.ok) {
-        throw new Error("Failed to update like");
-      }
+      if (!response.ok) throw new Error("Failed to update like");
       
+      // Immediately update UI
       setHasLiked(!hasLiked);
       setTotalLikes(prev => hasLiked ? prev - 1 : prev + 1);
+      
+      // Fetch the latest likes to ensure consistency
+      await fetchLikes();
     } catch (error) {
       console.error("Error updating like:", error);
     } finally {
       setIsLikeLoading(false);
     }
   };
-
-  async function loadComments() {
-    try {
-      setLoadingComments(true);
-      const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/comments`);
-      if (!res.ok) {
-        throw new Error("Failed to load comments");
-      }
-      const data = await res.json();
-      setComments(data.comments || []);
-      setLoadingComments(false);
-    } catch (error) {
-      console.error("Comments error:", error);
-      setLoadingComments(false);
-    }
-  }
-
-  useEffect(() => {
-    loadComments();
-  }, [id]);
 
   async function handleSubmitAction(data) {
     const { text, parentId } = data;
@@ -114,11 +109,10 @@ const Run = () => {
           })
         }
       );
-      if (!res.ok) {
-        throw new Error("Failed to create comment");
-      }
-      const newComment = await res.json();
-      setComments((prev) => [...prev, newComment]); 
+      if (!res.ok) throw new Error("Failed to create comment");
+      
+      // Fetch latest comments after submitting
+      await fetchComments();
     } catch (error) {
       console.error("Submit comment error:", error);
     }
@@ -147,9 +141,7 @@ const Run = () => {
           surveyResult: results
         })
       });
-      if (!response.ok) {
-        throw new Error("Failed to post results");
-      }
+      if (!response.ok) throw new Error("Failed to post results");
       console.log("Survey results posted successfully");
     } catch (error) {
       console.error("Error posting results:", error);
