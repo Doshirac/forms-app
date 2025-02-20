@@ -3,10 +3,10 @@
     "title": "Meine App",
     "login": "Anmelden",
     "register": "Registrieren",
-    "signOut": "Abmelden",
     "userManagement": "Benutzerverwaltung",
     "dashboard": "Dashboard",
-    "myAccount": "Konto"
+    "myAccount": "Konto",
+    "menu": "Menü"
   },
   "registration": {
     "title": "Registrierung",
@@ -88,6 +88,7 @@
     "tags": "Tags",
     "noDescription": "Keine Beschreibung",
     "noTags": "Keine Tags",
-    "search": "Suchumfragen"
+    "search": "Suchumfragen",
+    "list": "Meine Umfragen"
   }
 }

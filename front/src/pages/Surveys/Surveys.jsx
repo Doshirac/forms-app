@@ -174,7 +174,7 @@ export default function Surveys() {
   const singleSelectedId = selected.length === 1 ? selected[0] : null;
 
   return (
-    <Paper className="m-auto p-4 rounded shadow w-1/2 max-[768px]:mb-[9vh] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
+    <Paper className="m-auto p-4 rounded shadow w-4/5 max-[768px]:mb-[9vh] bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
       <Toolbar className="flex justify-between bg-gray-50 dark:bg-gray-700 rounded-t">
         <Box className="flex items-center w-full gap-2">
           <TextField
