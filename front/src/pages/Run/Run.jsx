@@ -24,7 +24,6 @@ const Run = () => {
   const { darkTheme } = useContext(ThemeContext);
   const { i18n } = useTranslation();
 
-  // Load initial survey data
   useEffect(() => {
     async function loadSurvey() {
       try {
@@ -39,7 +38,6 @@ const Run = () => {
     loadSurvey();
   }, [id]);
 
-  // Function to fetch likes
   const fetchLikes = async () => {
     try {
       const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/likes`);
@@ -52,7 +50,6 @@ const Run = () => {
     }
   };
 
-  // Function to fetch comments
   const fetchComments = async () => {
     try {
       const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/comments`);
@@ -66,9 +63,8 @@ const Run = () => {
     }
   };
 
-  // Set up polling for likes and comments
-  usePolling(fetchLikes, 3000, [id]); // Poll likes every 3 seconds
-  usePolling(fetchComments, 4000, [id]); // Poll comments every 4 seconds
+  usePolling(fetchLikes, 3000);
+  usePolling(fetchComments, 4000);
 
   const handleLikeClick = async () => {
     if (isLikeLoading) return;
@@ -81,11 +77,9 @@ const Run = () => {
       const response = await fetchWithAuth(endpoint, { method });
       if (!response.ok) throw new Error("Failed to update like");
       
-      // Immediately update UI
       setHasLiked(!hasLiked);
       setTotalLikes(prev => hasLiked ? prev - 1 : prev + 1);
       
-      // Fetch the latest likes to ensure consistency
       await fetchLikes();
     } catch (error) {
       console.error("Error updating like:", error);
@@ -111,7 +105,6 @@ const Run = () => {
       );
       if (!res.ok) throw new Error("Failed to create comment");
       
-      // Fetch latest comments after submitting
       await fetchComments();
     } catch (error) {
       console.error("Submit comment error:", error);

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const usePolling = (callback, delay = []) => {
+const usePolling = (callback, interval) => {
   const savedCallback = useRef(callback);
 
   useEffect(() => {
@@ -8,15 +8,21 @@ const usePolling = (callback, delay = []) => {
   }, [callback]);
 
   useEffect(() => {
-    if (delay === null) return;
+    if (!interval) return;
     
     const poll = async () => {
-      await savedCallback.current();
+      try {
+        await savedCallback.current();
+      } catch (error) {
+        console.error('Polling error:', error);
+      }
     };
 
-    const id = setInterval(poll, delay);
+    poll();
+    const id = setInterval(poll, interval);
+    
     return () => clearInterval(id);
-  }, [delay]);
+  }, [interval]);
 };
 
 export default usePolling;
