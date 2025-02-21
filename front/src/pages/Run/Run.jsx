@@ -15,6 +15,7 @@ import usePolling from "../../hooks/usePolling";
 const Run = () => {
   const { id } = useParams();
   const [surveyData, setSurveyData] = useState(null);
+  const [surveyModel, setSurveyModel] = useState(null);
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(true);
   const [totalLikes, setTotalLikes] = useState(0);
@@ -36,7 +37,36 @@ const Run = () => {
       }
     }
     loadSurvey();
-  }, [id]);
+  }, [id, fetchWithAuth]);
+
+  useEffect(() => {
+    if (surveyData && !surveyModel) {
+      const model = new Model(surveyData.json);
+      model.locale = i18n.language;
+      if (darkTheme) {
+        model.applyTheme(FlatDark);
+      } else {
+        model.applyTheme(FlatLight);
+      }
+      model.onComplete.add(async (sender) => {
+        const results = sender.data;
+        try {
+          const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/results`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              surveyResult: results
+            })
+          });
+          if (!response.ok) throw new Error("Failed to post results");
+          console.log("Survey results posted successfully");
+        } catch (error) {
+          console.error("Error posting results:", error);
+        }
+      });
+      setSurveyModel(model);
+    }
+  }, [surveyData, surveyModel, i18n.language, darkTheme, fetchWithAuth, id]);
 
   const fetchLikes = async () => {
     try {
@@ -90,7 +120,6 @@ const Run = () => {
 
   async function handleSubmitAction(data) {
     const { text, parentId } = data;
-
     try {
       const res = await fetchWithAuth(
         `http://localhost:5000/api/surveys/${id}/comments`,
@@ -104,42 +133,15 @@ const Run = () => {
         }
       );
       if (!res.ok) throw new Error("Failed to create comment");
-      
       await fetchComments();
     } catch (error) {
       console.error("Submit comment error:", error);
     }
   }
 
-  if (!surveyData) {
+  if (!surveyData || !surveyModel) {
     return <div>Loading survey...</div>;
   }
-
-  const surveyModel = new Model(surveyData.json);
-  surveyModel.locale = i18n.language;
-
-  if (darkTheme) {
-    surveyModel.applyTheme(FlatDark);
-  } else {
-    surveyModel.applyTheme(FlatLight);
-  }
-
-  surveyModel.onComplete.add(async (sender) => {
-    const results = sender.data;
-    try {
-      const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/results`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          surveyResult: results
-        })
-      });
-      if (!response.ok) throw new Error("Failed to post results");
-      console.log("Survey results posted successfully");
-    } catch (error) {
-      console.error("Error posting results:", error);
-    }
-  });
 
   return (
     <div>
@@ -157,9 +159,7 @@ const Run = () => {
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
           }`}
         >
-          <Heart
-            className={`w-5 h-5 ${hasLiked ? "fill-current" : ""}`}
-          />
+          <Heart className={`w-5 h-5 ${hasLiked ? "fill-current" : ""}`} />
           <span>{totalLikes}</span>
         </button>
       </div>
@@ -178,25 +178,23 @@ const Run = () => {
               }}
               commentData={comments}
               onSubmitAction={handleSubmitAction}
-              titleStyle={
-                darkTheme 
-                ? { color: "white" } 
-                : { color: "black" }}
-              inputStyle={{color: "black" }}
+              titleStyle={darkTheme ? { color: "white" } : { color: "black" }}
+              inputStyle={{ color: "black" }}
               submitBtnStyle={
                 darkTheme
-                ? { border: "none", backgroundColor: "rgb(234 179 8 / var(--tw-text-opacity, 1))" }
-                : { border: "none", backgroundColor: "rgb(34 197 94 / var(--tw-text-opacity, 1))" }
+                  ? { border: "none", backgroundColor: "rgb(234 179 8 / var(--tw-text-opacity, 1))" }
+                  : { border: "none", backgroundColor: "rgb(34 197 94 / var(--tw-text-opacity, 1))" }
               }
               cancelBtnStyle={
                 darkTheme
-                ? { border: "1px solid #4b5563", backgroundColor: "#374151", color: "white" }
-                : { border: "1px solid gray", backgroundColor: "gray", color: "white" }
+                  ? { border: "1px solid #4b5563", backgroundColor: "#374151", color: "white" }
+                  : { border: "1px solid gray", backgroundColor: "gray", color: "white" }
               }
               replyInputStyle={
-                darkTheme 
-                ? { borderBottom: "1px solid #4b5563", color: "white" }
-                : { borderBottom: "1px solid black", color: "black" }}
+                darkTheme
+                  ? { borderBottom: "1px solid #4b5563", color: "white" }
+                  : { borderBottom: "1px solid black", color: "black" }
+              }
             />
           </div>
         )}
