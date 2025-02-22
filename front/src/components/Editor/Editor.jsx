@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SurveyCreator, SurveyCreatorComponent } from "survey-creator-react";
+import { useTranslation } from "react-i18next";
 import "survey-creator-core/survey-creator-core.css";
 import "survey-core/i18n/german";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
@@ -7,6 +8,7 @@ import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
 const Editor = ({ id }) => {
   const [creator, setCreator] = useState(null);
   const { fetchWithAuth } = useFetchWithAuth();
+  const { t } = useTranslation()
 
   const creatorInstance = useMemo(() => {
     const options = {
@@ -32,11 +34,10 @@ const Editor = ({ id }) => {
           })
         });
         if (!response.ok) {
-          throw new Error("Failed to update survey");
+          throw new Error(t("surveys.failUpdate"));
         }
         callback(saveNo, true);
       } catch (error) {
-        console.error("Save survey error:", error);
         callback(saveNo, false);
       }
     };
@@ -51,7 +52,7 @@ const Editor = ({ id }) => {
       try {
         const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
         if (!res.ok) {
-          throw new Error("Failed to load survey for editing");
+          throw new Error(t("surveys.failEditing"));
         }
         const surveyData = await res.json();
 
@@ -65,13 +66,13 @@ const Editor = ({ id }) => {
           }
         }
       } catch (error) {
-        console.error("Load survey error:", error);
+        console.error(t("surveys.failLoading"), error);
       }
     })();
   }, [creator, id]);
 
   if (!creator) {
-    return <div>Loading Editor...</div>;
+    return <div className="text-black dark:text-white font-bold text-xl">{t("editor.loading")}</div>;
   }
 
   return (

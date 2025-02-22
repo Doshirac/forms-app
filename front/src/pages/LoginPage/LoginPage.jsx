@@ -68,7 +68,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-black text-gray-800 dark:text-gray-200">
+    <div className="flex items-center justify-center h-screen text-gray-800 dark:text-gray-200">
       <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-3xl w-[26%] h-3/4 flex justify-center items-center shadow-md max-[768px]:w-[80%] max-[768px]:h-[60%]">
         <div className="h-[80%] w-2/3 flex flex-col justify-between items-center">
           <h2 className="text-xl font-bold mb-4">

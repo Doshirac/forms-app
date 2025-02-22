@@ -28,5 +28,8 @@
     "noCreator": "Verboten: Kein Ersteller oder Administrator",
     "notFound": "Umfrage nicht gefunden",
     "missingResult": "Fehlendes 'Umfrageergebnis'"
+  },
+  "comments": {
+    "textRequiered": "Kommentartext ist erforderlich"
   }
 }

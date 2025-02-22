@@ -28,5 +28,8 @@
     "noCreator": "Forbidden: No creator or admin",
     "notFound": "Survey not found",
     "missingResult": "Missing 'surveyResult'"
+  },
+  "comments": {
+    "textRequiered": "Comment text is required"
   }
 }

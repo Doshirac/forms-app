@@ -53,13 +53,13 @@ export default function Surveys() {
       setStatus("loading");
       const response = await fetchWithAuth("http://localhost:5000/api/surveys");
       if (!response.ok) {
-        throw new Error("Failed to load surveys");
+        throw new Error(t("surveys.failLoading"));
       }
       const data = await response.json();
       setSurveys(data);
       setStatus("success");
     } catch (err) {
-      console.error("Error fetching surveys:", err);
+      console.error(t("surveys.errorFetching"), err);
       setError(err.message);
       setStatus("error");
     }
@@ -73,11 +73,11 @@ export default function Surveys() {
         body: JSON.stringify({})
       });
       if (!response.ok) {
-        throw new Error("Failed to create survey");
+        throw new Error(t("surveys.failCreation"));
       }
       await fetchSurveys();
     } catch (error) {
-      console.error("Add survey error:", error);
+      console.error(t("surveys.failCreation"), error);
     }
   }
 
@@ -91,13 +91,13 @@ export default function Surveys() {
           }
         );
         if (!response.ok) {
-          throw new Error(`Failed to remove survey ${surveyId}`);
+          throw new Error(`${t("surveys.failDeletion")} ${surveyId}`);
         }
       }
       setSelected([]);
       fetchSurveys();
     } catch (error) {
-      console.error("Remove survey error:", error);
+      console.error(t("surveys.failDeletion"), error);
     }
   }
 
@@ -165,10 +165,10 @@ export default function Surveys() {
   };
 
   if (status === "loading") {
-    return <div>Loading surveys...</div>;
+    return <div className="text-black dark:text-white font-bold text-xl">{t("surveys.loading")}</div>;
   }
   if (status === "error") {
-    return <div>Error loading surveys: {error}</div>;
+    return <div className="text-black dark:text-white font-bold text-xl">{t("surveys.errorLoading")} {error}</div>;
   }
 
   const singleSelectedId = selected.length === 1 ? selected[0] : null;

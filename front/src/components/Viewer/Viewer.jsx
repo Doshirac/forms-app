@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Model } from "survey-core";
 import { useFetchWithAuth } from "../../hooks/useFetchWithAuth";
+import { useTranslation } from "react-i18next";
 import "tabulator-tables/dist/css/tabulator.css";
 import "survey-analytics/survey.analytics.tabulator.css";
 
@@ -9,14 +10,15 @@ const SurveyAnalyticsTabulator = require("survey-analytics/survey.analytics.tabu
 const Viewer = ({ id, onSurveyNameLoaded }) => {
   const visContainerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-    const { fetchWithAuth } = useFetchWithAuth();
+  const { fetchWithAuth } = useFetchWithAuth();
+  const { t } = useTranslation()
 
   useEffect(() => {
     async function loadSurveyAndResults() {
       try {
         const surveyResponse = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
         if (!surveyResponse.ok) {
-          throw new Error("Failed to load survey");
+          throw new Error(t("surveys.failLoading"));
         }
         const surveyData = await surveyResponse.json();
 
@@ -26,7 +28,7 @@ const Viewer = ({ id, onSurveyNameLoaded }) => {
 
         const resultsResponse = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/results`);
         if (!resultsResponse.ok) {
-          throw new Error("Failed to load results");
+          throw new Error(t("results.failLoading"));
         }
         const resultsData = await resultsResponse.json();
 
@@ -46,7 +48,6 @@ const Viewer = ({ id, onSurveyNameLoaded }) => {
 
         setIsLoading(false);
       } catch (error) {
-        console.error("Viewer load error:", error);
         setIsLoading(false);
       }
     }
@@ -55,13 +56,13 @@ const Viewer = ({ id, onSurveyNameLoaded }) => {
   }, [id, onSurveyNameLoaded]);
 
   if (isLoading) {
-    return <div>Loading results...</div>;
+    return <div>{t("results.loading")}</div>;
   }
 
   return (
-    <div className="sjs-results-content" ref={visContainerRef}>
-      <div className="sjs-results-placeholder">
-        <span>This survey doesn't have any answers yet</span>
+    <div ref={visContainerRef}>
+      <div>
+        <span className="text-black dark:text-white">{t("viewer.noResults")}</span>
       </div>
     </div>
   );

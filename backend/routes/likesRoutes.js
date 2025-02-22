@@ -21,8 +21,7 @@ router.get("/:surveyId/likes", async (req, res) => {
     
     res.json({ totalLikes, hasLiked });
   } catch (error) {
-    console.error("Error getting likes:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
@@ -42,8 +41,7 @@ router.post("/:surveyId/like", async (req, res) => {
     
     res.json({ success: true, liked });
   } catch (error) {
-    console.error("Error liking survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
@@ -58,8 +56,7 @@ router.delete("/:surveyId/like", async (req, res) => {
     );
     res.json({ success: true });
   } catch (error) {
-    console.error("Error unliking survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 

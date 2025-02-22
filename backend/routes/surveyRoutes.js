@@ -48,7 +48,6 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { id: userId } = req.user;
-
   try {
     const countRes = await pool.query("SELECT COUNT(*)::int as cnt FROM Surveys");
     const nextNum = countRes.rows[0].cnt + 1;
@@ -56,45 +55,78 @@ router.post("/", async (req, res) => {
 
     surveyTemplate.name = `New Survey ${nextNum}`;
     surveyTemplate.json.title = `New Survey ${nextNum}`;
+    
+    const description = surveyTemplate.json.description || "";
+    const tags = surveyTemplate.json.tags 
+      ? Array.isArray(surveyTemplate.json.tags)
+        ? surveyTemplate.json.tags.join(",")
+        : surveyTemplate.json.tags
+      : "";
 
     const insertQuery = `
-      INSERT INTO Surveys (name, json, created_by)
-      VALUES ($1, $2, $3)
-      RETURNING id, name, json, created_by, created_at
+      INSERT INTO Surveys (name, json, description, tags, created_by)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, name, json, description, tags, created_by, created_at
     `;
     const values = [
       surveyTemplate.name,
       JSON.stringify(surveyTemplate.json),
+      description,
+      tags,
       userId
     ];
     const { rows } = await pool.query(insertQuery, values);
     res.status(201).json(rows[0]);
   } catch (error) {
     console.error("Error creating survey:", error);
-    res.status(500).json({ error: req.t('surveys.serverError') });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, json } = req.body
+  const { name, json } = req.body; // updated JSON from the Editor
   const hasPermission = await canModifySurvey(req, id);
   if (!hasPermission) {
     return res.status(403).json({ error: req.t('surveys.noCreator') });
   }
 
   try {
+    // Parse the incoming JSON (if it's a string)
+    let parsedJson;
+    if (typeof json === "string") {
+      parsedJson = JSON.parse(json);
+    } else {
+      parsedJson = json;
+    }
+
+    // Extract description and tags from the parsed JSON.
+    const description = parsedJson.description || "";
+    const tags = parsedJson.tags 
+      ? Array.isArray(parsedJson.tags)
+        ? parsedJson.tags.join(",")
+        : parsedJson.tags
+      : "";
+
+    // Use the provided 'name' from req.body if available,
+    // otherwise use the 'title' property from the JSON.
+    const updatedName = name || parsedJson.title || null;
+
     const updateQuery = `
       UPDATE Surveys
       SET 
         name = COALESCE($1, name),
-        json = COALESCE($2, json)
-      WHERE id = $3
+        json = COALESCE($2, json),
+        description = $3,
+        tags = $4
+      WHERE id = $5
       RETURNING *
     `;
     const { rows } = await pool.query(updateQuery, [
-      name,
-      typeof json === "string" ? json : JSON.stringify(json),
+      updatedName,
+      JSON.stringify(parsedJson),
+      description,
+      tags,
       id
     ]);
     if (rows.length === 0) {

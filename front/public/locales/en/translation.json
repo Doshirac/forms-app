@@ -89,6 +89,40 @@
     "noDescription": "No description",
     "noTags": "No tags",
     "search": "Search Surveys",
-    "list": "My surveys"
+    "list": "My surveys",
+    "failLoading": "Failed to load surveys",
+    "failUpdate": "Failed to update survey",
+    "failEditing": "Failed to load survey for editing",
+    "loading": "Loading surveys...",
+    "errorLoading": "Error loading surveys: ",
+    "errorFetching": "Error fetching surveys: ",
+    "failCreation": "Failed to create survey",
+    "failDeletion": "Failed to remove survey"
+  },
+  "results": {
+    "loading": "Loading results...",
+    "output": "results",
+    "failLoading": "Failed to load results",
+    "errorPost": "Failed to post results"
+  },
+  "viewer": {
+    "noResults": "This survey doesn't have any answers yet"
+  },
+  "editor": {
+    "loading": "Loading Editor..."
+  },
+  "run": {
+    "errorLoading": "Failed to load survey",
+    "loading": "Loading survey..."
+  },
+  "likes": {
+    "update": "Failed to update like",
+    "loadingError": "Failed to load likes"
+  },
+  "comments": {
+    "creation": "Failed to create comment",
+    "errorCreation": "Submit comment error: ",
+    "loadingError": "Failed to load comments",
+    "loading": "Loading comments..."
   }
 }

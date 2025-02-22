@@ -1,24 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../models/db");
-
-function buildNestedComments(flatComments) {
-  const commentMap = {};
-  flatComments.forEach((c) => {
-    commentMap[c.comId] = { ...c, replies: [] };
-  });
-
-  const rootComments = [];
-  flatComments.forEach((c) => {
-    if (c.parentId) {
-      commentMap[c.parentId].replies.push(commentMap[c.comId]);
-    } else {
-      rootComments.push(commentMap[c.comId]);
-    }
-  });
-
-  return rootComments;
-}
+const { buildNestedComments } = require("../uitls/buildNestedComments");
 
 router.get("/:surveyId/comments", async (req, res) => {
   const { surveyId } = req.params;
@@ -51,8 +34,7 @@ router.get("/:surveyId/comments", async (req, res) => {
     const nested = buildNestedComments(flatComments);
     return res.json({ comments: nested });
   } catch (error) {
-    console.error("Error getting nested comments:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
@@ -62,7 +44,7 @@ router.post("/:surveyId/comments", async (req, res) => {
   const { text, parentId } = req.body;
 
   if (!text || text.trim() === "") {
-    return res.status(400).json({ error: "Comment text is required" });
+    return res.status(400).json({ error: req.t("comments.textRequiered") });
   }
 
   try {
@@ -88,8 +70,7 @@ router.post("/:surveyId/comments", async (req, res) => {
 
     res.status(201).json(newComment);
   } catch (error) {
-    console.error("Error creating new nested comment:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 

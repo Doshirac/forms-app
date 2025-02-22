@@ -89,6 +89,40 @@
     "noDescription": "Keine Beschreibung",
     "noTags": "Keine Tags",
     "search": "Suchumfragen",
-    "list": "Meine Umfragen"
+    "list": "Meine Umfragen",
+    "failLoading": "Umfragen konnten nicht geladen werden",
+    "failUpdate": "Umfrage konnte nicht aktualisiert werden",
+    "failEditing": "Umfrage konnte nicht zur Bearbeitung geladen werden",
+    "loading": "Umfragen werden geladen...",
+    "errorLoading": "Fehler beim Laden von Umfragen: ",
+    "errorFetching": "Fehler beim Abrufen von Umfragen: ",
+    "failCreation": "Umfrage konnte nicht erstellt werden",
+    "failDeletion": "Umfrage konnte nicht entfernt werden"
+  },
+  "results": {
+    "loading": "Ergebnisse werden geladen...",
+    "output": "Suchergebnisse",
+    "failLoading": "Ergebnisse konnten nicht geladen werden",
+    "errorPost": "Ergebnisse konnten nicht gepostet werden"
+  },
+  "viewer": {
+    "noResults": "Diese Umfrage hat noch keine Antworten"
+  },
+  "editor": {
+    "loading": "Editor wird geladen..."
+  },
+  "run": {
+    "errorLoading": "Umfrage konnte nicht geladen werden",
+    "loading": "Umfrage wird geladen..."
+  },
+  "likes": {
+    "update": "Aktualisierung fehlgeschlagen wie",
+    "loadingError": "Likes konnten nicht geladen werden"
+  },
+  "comments": {
+    "creation": "Kommentar konnte nicht erstellt werden",
+    "errorCreation": "Fehler beim Absenden des Kommentars: ",
+    "loadingError": "Kommentare konnten nicht geladen werden",
+    "loading": "Kommentare werden geladen..."
   }
 }

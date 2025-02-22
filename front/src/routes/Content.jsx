@@ -6,9 +6,7 @@ const Content = () => {
   return (
     <div>
       <NavBar />
-      <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-200
-                        dark:from-gray-900 dark:to-gray-800
-                        transition-colors duration-300 ">
+      <div className="p-16">
         <Outlet />
       </div>
     </div>

@@ -18,7 +18,9 @@ function App() {
     <AuthProvider>
       <ThemeProvider>
         <Router>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-200
+                        dark:from-gray-900 dark:to-gray-800
+                        transition-colors duration-300">
             <Header />
             <main className="flex-grow">
               <Routes>
