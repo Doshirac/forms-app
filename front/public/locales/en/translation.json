@@ -136,6 +136,8 @@
     "author": "Author",
     "responses": "Responses",
     "topPopularTemplates": "Top 5 Popular Templates",
-    "rank": "Rank"
+    "rank": "Rank",
+    "fetchError": "Dashboard fetch error: ",
+    "noAccess": "Skipping responses for survey {{id}} - no access"
   }
 }

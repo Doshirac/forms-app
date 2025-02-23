@@ -208,20 +208,23 @@ router.post("/:id/results", async (req, res) => {
 router.get("/:id/results", async (req, res) => {
   const { id } = req.params;
   const hasPermission = await canModifySurvey(req, id);
-  if (!hasPermission) {
-    return res.status(403).json({ error: req.t('surveys.noCreator') });
-  }
 
   try {
-    const query = `
-      SELECT r.*, u.name as user_name 
-      FROM Results r
-      JOIN Users u ON r.user_id = u.id
-      WHERE r.survey_id = $1 
-      ORDER BY r.id
-    `;
-    const { rows } = await pool.query(query, [id]);
-    res.json(rows);
+    if (hasPermission) {
+      const query = `
+        SELECT r.*, u.name as user_name 
+        FROM Results r
+        JOIN Users u ON r.user_id = u.id 
+        WHERE r.survey_id = $1 
+        ORDER BY r.id
+      `;
+      const { rows } = await pool.query(query, [id]);
+      res.json(rows);
+    } else {
+      const countQuery = `SELECT COUNT(*) FROM Results WHERE survey_id = $1`;
+      const { rows } = await pool.query(countQuery, [id]);
+      res.json({ count: parseInt(rows[0].count, 10) });
+    }
   } catch (error) {
     res.status(500).json({ error: req.t('surveys.serverError') });
   }

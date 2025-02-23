@@ -136,6 +136,8 @@
     "author": "Autor",
     "responses": "Antwort",
     "topPopularTemplates": "Top 5 der beliebtesten Vorlagen",
-    "rank": "Rang"
+    "rank": "Rang",
+    "fetchError": "Dashboard-Abruffehler: ",
+    "noAccess": "Antworten für Umfrage überspringen {{id}} - kein Zugriff"
   }
 }

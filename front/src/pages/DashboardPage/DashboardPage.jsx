@@ -31,16 +31,15 @@ const DashboardPage = () => {
 
         const surveysWithResponses = await Promise.all(
           surveysData.map(async (survey) => {
-            if (isAdmin || survey.created_by === survey.user_id) {
-              try {
-                const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${survey.id}/results`);
-                if (res.ok) {
-                  const results = await res.json();
-                  return { ...survey, responsesCount: results.length };
-                }
-              } catch (error) {
-                console.error(`Skipping responses for survey ${survey.id} - no access`);
+            try {
+              const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${survey.id}/results`);
+              if (res.ok) {
+                const data = await res.json();
+                const responsesCount = Array.isArray(data) ? data.length : data.count || 0;
+                return { ...survey, responsesCount };
               }
+            } catch (error) {
+              console.error(t("dashboard.noAccess", { id: survey.id }));
             }
             return { ...survey, responsesCount: 0 };
           })
@@ -49,12 +48,11 @@ const DashboardPage = () => {
         setSurveys(surveysWithResponses);
 
         const topPopular = [...surveysWithResponses]
-          .filter(survey => isAdmin || survey.created_by === survey.user_id)
           .sort((a, b) => b.responsesCount - (a.responsesCount || 0))
           .slice(0, 5);
         setPopularSurveys(topPopular);
       } catch (error) {
-        console.error("Dashboard fetch error:", error);
+        console.error(t("dashboard.fetchError"), error);
       } finally {
         setLoading(false);
       }
@@ -151,10 +149,10 @@ const DashboardPage = () => {
           {popularSurveys.map((template, index) => (
             <div key={template.id} className="border p-4 rounded-md shadow-md flex flex-col justify-between">
               <div>
-                <p className="text-xs text-gray-500 mb-1">
+                <p className="text-base text-gray-500 mb-1 text-green-500 dark:text-yellow-500">
                   {t("dashboard.rank")}: {index + 1}
                 </p>
-                <h3 className="font-bold text-lg">{template.name}</h3>
+                <h3 className="font-bold text-lg text-dark dark:text-white">{template.name}</h3>
                 <p className="text-sm text-gray-600">
                   {template.description || t("dashboard.noDescription")}
                 </p>
