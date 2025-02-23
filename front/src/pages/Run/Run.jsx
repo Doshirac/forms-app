@@ -19,11 +19,11 @@ const Run = () => {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    async function loadSurvey() {
+    const loadSurvey = async () => {
       try {
         const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
         if (!response.ok) {
-          throw new Error("Failed to load survey");
+          throw new Error(t("run.errorLoading"));
         }
         const data = await response.json();
         setSurveyData(data);

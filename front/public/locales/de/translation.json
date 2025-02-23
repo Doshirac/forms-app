@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Meine App",
+    "title": "Formulare App",
     "login": "Anmelden",
     "register": "Registrieren",
     "userManagement": "Benutzerverwaltung",
@@ -124,5 +124,18 @@
     "errorCreation": "Fehler beim Absenden des Kommentars: ",
     "loadingError": "Kommentare konnten nicht geladen werden",
     "loading": "Kommentare werden geladen..."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "failLoadingLatest": "Fehler beim Abrufen von Umfragen",
+    "confirmDelete": "Sind Sie sicher, dass Sie diese Umfrage löschen möchten?",
+    "loading": "Dashboard wird geladen...",
+    "dashboard": "Dashboard",
+    "latestTemplates": "Neueste Vorlagen",
+    "noDescription": "Keine Beschreibung angegeben.",
+    "author": "Autor",
+    "responses": "Antwort",
+    "topPopularTemplates": "Top 5 der beliebtesten Vorlagen",
+    "rank": "Rang"
   }
 }

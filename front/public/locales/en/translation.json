@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "My App",
+    "title": "Forms App",
     "login": "Login",
     "register": "Register",
     "userManagement": "User Management",
@@ -124,5 +124,18 @@
     "errorCreation": "Submit comment error: ",
     "loadingError": "Failed to load comments",
     "loading": "Loading comments..."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "failLoadingLatest": "Error fetching surveys",
+    "confirmDelete": "Are you sure you want to delete this survey?",
+    "loading": "Loading dashboard...",
+    "dashboard": "Dashboard",
+    "latestTemplates": "Latest Templates",
+    "noDescription": "No description provided.",
+    "author": "Author",
+    "responses": "Responses",
+    "topPopularTemplates": "Top 5 Popular Templates",
+    "rank": "Rank"
   }
 }

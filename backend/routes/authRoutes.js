@@ -53,7 +53,10 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await pool.query("SELECT * FROM Users WHERE email = $1", [email]);
+    const user = await pool.query(
+      "SELECT * FROM Users WHERE email = $1",
+      [email]
+    );
 
     if (user.rows.length === 0) {
       return res.status(401).json({ 
@@ -75,17 +78,25 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const token = generateToken(user.rows[0]);
+    const token = generateToken({
+      id: user.rows[0].id,
+      email: user.rows[0].email,
+      is_admin: user.rows[0].is_admin || false
+    });
 
-    await pool.query("UPDATE Users SET last_login = NOW() WHERE id = $1", [
-      user.rows[0].id,
-    ]);
+    await pool.query(
+      "UPDATE Users SET last_login = NOW() WHERE id = $1",
+      [user.rows[0].id]
+    );
 
     res.status(200).json({ 
       message: req.t('auth.loginSuccess'),
       token, 
       user: {
-        is_admin: user.rows[0].is_admin || false
+        id: user.rows[0].id,
+        email: user.rows[0].email,
+        is_admin: user.rows[0].is_admin || false,
+        name: user.rows[0].name
       }
     });
   } catch (error) {

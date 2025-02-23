@@ -12,6 +12,8 @@ import Run from "./pages/Run/Run";
 import Edit from "./pages/Edit/Edit";
 import Results from "./pages/Results/Results";
 import Surveys from "./pages/Surveys/Surveys";
+import DashboardPage from "./pages/DashboardPage/DashboardPage";
+import DashboardLayout from "./routes/DashboardLayout";
 
 function App() {
   return (
@@ -27,7 +29,11 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegistrationPage />} />
                 <Route path="/" element={<HomePage />} />
-                <Route path="/dashboard" element={<div>Dashboard Page</div>} />
+                <Route path="/dashboard" element={<DashboardLayout />}>
+                  <Route index element={<DashboardPage />} />
+                  <Route path="run/:id" element={<Run />} />
+                  <Route path="edit/:id" element={<Edit />} />
+                </Route>
                 <Route path="/user-management" element={<UserManagementPage />} />
                 <Route path="/content" element={<Content />}>
                   <Route index element={<Surveys />} />

@@ -1,3 +1,5 @@
+const pool = require("../models/db");
+
 const canModifySurvey = async (req, surveyId) => {
     const { id: userId, is_admin } = req.user;
     if (is_admin) return true;

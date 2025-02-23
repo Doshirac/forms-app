@@ -48,10 +48,10 @@ export default function Surveys() {
     }
   }, [status]);
 
-  async function fetchSurveys() {
+  const fetchSurveys = async () => {
     try {
       setStatus("loading");
-      const response = await fetchWithAuth("http://localhost:5000/api/surveys");
+      const response = await fetchWithAuth("http://localhost:5000/api/surveys/my");
       if (!response.ok) {
         throw new Error(t("surveys.failLoading"));
       }
@@ -65,7 +65,7 @@ export default function Surveys() {
     }
   }
 
-  async function addSurvey() {
+  const addSurvey = async () => {
     try {
       const response = await fetchWithAuth("http://localhost:5000/api/surveys", {
         method: "POST",
@@ -81,7 +81,7 @@ export default function Surveys() {
     }
   }
 
-  async function removeSelectedSurveys() {
+  const removeSelectedSurveys = async () => {
     try {
       for (const surveyId of selected) {
         const response = await fetchWithAuth(
@@ -101,7 +101,7 @@ export default function Surveys() {
     }
   }
 
-  function handleRequestSort(event, property) {
+  const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -128,7 +128,7 @@ export default function Surveys() {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  function handleSelectAll(event) {
+  const handleSelectAll = (event) => {
     if (event.target.checked) {
       const allIds = filteredSurveys.map((s) => s.id);
       setSelected(allIds);
@@ -137,17 +137,17 @@ export default function Surveys() {
     }
   }
 
-  function handleRowSelection(surveyId) {
+  const handleRowSelection = (surveyId) => {
     setSelected((prev) =>
       prev.includes(surveyId) ? prev.filter((id) => id !== surveyId) : [...prev, surveyId]
     );
   }
 
-  function handleChangePage(event, newPage) {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   }
 
-  function handleChangeRowsPerPage(event) {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   }

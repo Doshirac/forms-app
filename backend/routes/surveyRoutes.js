@@ -9,52 +9,75 @@ router.get("/", async (req, res) => {
   try {
     let query, values;
     if (is_admin) {
-      query = `SELECT * FROM Surveys ORDER BY id`;
-      values = [];
+      query = `
+        SELECT s.*, u.name as user_name 
+        FROM Surveys s
+        JOIN Users u ON s.created_by = u.id
+        ORDER BY s.created_at DESC
+      `;
+      const result = await pool.query(query);
+      res.json(result.rows);
     } else {
-      query = `SELECT * FROM Surveys WHERE created_by = $1 ORDER BY id`;
-      values = [userId];
+      query = `
+        SELECT s.*, u.name as user_name 
+        FROM Surveys s
+        JOIN Users u ON s.created_by = u.id
+        WHERE s.access_settings = 'public' OR s.created_by = $1
+        ORDER BY s.created_at DESC
+      `;
+      const result = await pool.query(query, [userId]);
+      res.json(result.rows);
     }
-    const result = await pool.query(query, values);
+  } catch (error) {
+    res.status(500).json({ error: req.t("surveys.serverError") });
+  }
+});
+
+router.get("/my", async (req, res) => {
+  const { id: userId } = req.user;
+  try {
+    const query = `
+      SELECT s.*, u.name as user_name 
+      FROM Surveys s
+      JOIN Users u ON s.created_by = u.id
+      WHERE s.created_by = $1 
+      ORDER BY s.created_at DESC
+    `;
+    const result = await pool.query(query, [userId]);
     res.json(result.rows);
   } catch (error) {
-    console.error("Error retrieving surveys:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const { id: userId, is_admin } = req.user;
   try {
-    let result;
-    if (is_admin) {
-      result = await pool.query(`SELECT * FROM Surveys WHERE id = $1`, [id]);
-    } else {
-      result = await pool.query(
-        `SELECT * FROM Surveys WHERE id = $1 AND created_by = $2`,
-        [id, userId]
-      );
-    }
+    let query, values;
+    query = `
+      SELECT s.*, u.name as user_name 
+      FROM Surveys s
+      JOIN Users u ON s.created_by = u.id
+      WHERE s.id = $1
+    `;
+      values = [id];
+    const result = await pool.query(query, values);
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Survey not found" });
+      return res.status(404).json({ error: req.t('surveys.notFound') });
     }
     res.json(result.rows[0]);
   } catch (error) {
-    console.error("Error retrieving survey:", error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
 router.post("/", async (req, res) => {
   const { id: userId } = req.user;
   try {
-    const countRes = await pool.query("SELECT COUNT(*)::int as cnt FROM Surveys");
-    const nextNum = countRes.rows[0].cnt + 1;
     const surveyTemplate = JSON.parse(JSON.stringify(defaultJSON));
 
-    surveyTemplate.name = `New Survey ${nextNum}`;
-    surveyTemplate.json.title = `New Survey ${nextNum}`;
+    surveyTemplate.name = `New Survey`;
+    surveyTemplate.json.title = `New Survey`;
     
     const description = surveyTemplate.json.description || "";
     const tags = surveyTemplate.json.tags 
@@ -78,21 +101,19 @@ router.post("/", async (req, res) => {
     const { rows } = await pool.query(insertQuery, values);
     res.status(201).json(rows[0]);
   } catch (error) {
-    console.error("Error creating survey:", error);
     res.status(500).json({ error: req.t("surveys.serverError") });
   }
 });
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { name, json } = req.body; // updated JSON from the Editor
+  const { name, json } = req.body;
   const hasPermission = await canModifySurvey(req, id);
   if (!hasPermission) {
     return res.status(403).json({ error: req.t('surveys.noCreator') });
   }
 
   try {
-    // Parse the incoming JSON (if it's a string)
     let parsedJson;
     if (typeof json === "string") {
       parsedJson = JSON.parse(json);
@@ -100,7 +121,6 @@ router.put("/:id", async (req, res) => {
       parsedJson = json;
     }
 
-    // Extract description and tags from the parsed JSON.
     const description = parsedJson.description || "";
     const tags = parsedJson.tags 
       ? Array.isArray(parsedJson.tags)
@@ -108,8 +128,6 @@ router.put("/:id", async (req, res) => {
         : parsedJson.tags
       : "";
 
-    // Use the provided 'name' from req.body if available,
-    // otherwise use the 'title' property from the JSON.
     const updatedName = name || parsedJson.title || null;
 
     const updateQuery = `
@@ -134,7 +152,6 @@ router.put("/:id", async (req, res) => {
     }
     res.json(rows[0]);
   } catch (error) {
-    console.error("Error updating survey:", error);
     res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
@@ -156,7 +173,6 @@ router.delete("/:id", async (req, res) => {
     }
     res.json({ message: `Survey ${id} deleted`, deleted: result.rows[0] });
   } catch (error) {
-    console.error("Error deleting survey:", error);
     res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
@@ -184,7 +200,6 @@ router.post("/:id/results", async (req, res) => {
     const result = await pool.query(insertQuery, [id, userId, surveyResult]);
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error("Error posting survey results:", error);
     res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
@@ -197,11 +212,16 @@ router.get("/:id/results", async (req, res) => {
   }
 
   try {
-    const query = "SELECT * FROM Results WHERE survey_id = $1 ORDER BY id";
+    const query = `
+      SELECT r.*, u.name as user_name 
+      FROM Results r
+      JOIN Users u ON r.user_id = u.id
+      WHERE r.survey_id = $1 
+      ORDER BY r.id
+    `;
     const { rows } = await pool.query(query, [id]);
     res.json(rows);
   } catch (error) {
-    console.error("Error retrieving results:", error);
     res.status(500).json({ error: req.t('surveys.serverError') });
   }
 });
