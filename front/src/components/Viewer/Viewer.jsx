@@ -16,7 +16,7 @@ const Viewer = ({ id, onSurveyNameLoaded }) => {
   useEffect(() => {
     async function loadSurveyAndResults() {
       try {
-        const surveyResponse = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
+        const surveyResponse = await fetchWithAuth(`/api/surveys/${id}`);
         if (!surveyResponse.ok) {
           throw new Error(t("surveys.failLoading"));
         }
@@ -26,7 +26,7 @@ const Viewer = ({ id, onSurveyNameLoaded }) => {
           onSurveyNameLoaded(surveyData.name);
         }
 
-        const resultsResponse = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/results`);
+        const resultsResponse = await fetchWithAuth(`/api/surveys/${id}/results`);
         if (!resultsResponse.ok) {
           throw new Error(t("results.failLoading"));
         }

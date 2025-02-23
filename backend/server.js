@@ -12,9 +12,10 @@ const languageMiddleware = require("./middlewares/languageMiddleware");
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
+const ORIGIN = process.env.ORIGIN
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ORIGIN,
   credentials: true,
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Language'],

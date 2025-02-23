@@ -34,7 +34,7 @@ export const RegistrationPage = () => {
         "X-Language": i18n.language || 'en'
       };
       
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         credentials: 'include',
         headers,

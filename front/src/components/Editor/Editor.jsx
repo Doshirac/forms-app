@@ -26,7 +26,7 @@ const Editor = ({ id }) => {
 
     creatorInstance.saveSurveyFunc = async (saveNo, callback) => {
       try {
-        const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`, {
+        const response = await fetchWithAuth(`/api/surveys/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -50,7 +50,7 @@ const Editor = ({ id }) => {
 
     (async () => {
       try {
-        const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
+        const res = await fetchWithAuth(`/api/surveys/${id}`);
         if (!res.ok) {
           throw new Error(t("surveys.failEditing"));
         }

@@ -8,7 +8,7 @@ export const Comments = memo(({ surveyId, fetchWithAuth, darkTheme, t }) => {
 
   const fetchComments = async () => {
     try {
-      const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${surveyId}/comments`);
+      const res = await fetchWithAuth(`/api/surveys/${surveyId}/comments`);
       if (!res.ok) throw new Error(t("comments.loadingError"));
       const data = await res.json();
       setComments(data.comments || []);
@@ -25,7 +25,7 @@ export const Comments = memo(({ surveyId, fetchWithAuth, darkTheme, t }) => {
     const { text, parentId } = data;
     try {
       const res = await fetchWithAuth(
-        `http://localhost:5000/api/surveys/${surveyId}/comments`,
+        `/api/surveys/${surveyId}/comments`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

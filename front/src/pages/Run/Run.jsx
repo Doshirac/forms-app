@@ -21,7 +21,7 @@ const Run = () => {
   useEffect(() => {
     const loadSurvey = async () => {
       try {
-        const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`);
+        const response = await fetchWithAuth(`/api/surveys/${id}`);
         if (!response.ok) {
           throw new Error(t("run.errorLoading"));
         }
@@ -50,7 +50,7 @@ const Run = () => {
   surveyModel.onComplete.add(async (sender) => {
     const results = sender.data;
     try {
-      const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}/results`, {
+      const response = await fetchWithAuth(`/api/surveys/${id}/results`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

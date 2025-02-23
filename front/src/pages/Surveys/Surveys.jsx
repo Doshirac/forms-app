@@ -51,7 +51,7 @@ export default function Surveys() {
   const fetchSurveys = async () => {
     try {
       setStatus("loading");
-      const response = await fetchWithAuth("http://localhost:5000/api/surveys/my");
+      const response = await fetchWithAuth("/api/surveys/my");
       if (!response.ok) {
         throw new Error(t("surveys.failLoading"));
       }
@@ -67,7 +67,7 @@ export default function Surveys() {
 
   const addSurvey = async () => {
     try {
-      const response = await fetchWithAuth("http://localhost:5000/api/surveys", {
+      const response = await fetchWithAuth("/api/surveys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({})
@@ -85,7 +85,7 @@ export default function Surveys() {
     try {
       for (const surveyId of selected) {
         const response = await fetchWithAuth(
-          `http://localhost:5000/api/surveys/${surveyId}`,
+          `/api/surveys/${surveyId}`,
           {
             method: "DELETE"
           }

@@ -23,7 +23,7 @@ const DashboardPage = () => {
     const fetchSurveys = async () => {
       try {
         setLoading(true);
-        const response = await fetchWithAuth("http://localhost:5000/api/surveys");
+        const response = await fetchWithAuth("/api/surveys");
         if (!response.ok) {
           throw new Error(t("dashboard.failLoadingLatest"));
         }
@@ -32,7 +32,7 @@ const DashboardPage = () => {
         const surveysWithResponses = await Promise.all(
           surveysData.map(async (survey) => {
             try {
-              const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${survey.id}/results`);
+              const res = await fetchWithAuth(`/api/surveys/${survey.id}/results`);
               if (res.ok) {
                 const data = await res.json();
                 const responsesCount = Array.isArray(data) ? data.length : data.count || 0;
@@ -72,7 +72,7 @@ const DashboardPage = () => {
   const handleRemove = async (id) => {
     if (window.confirm(t("dashboard.confirmDelete"))) {
       try {
-        const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${id}`, {
+        const response = await fetchWithAuth(`/api/surveys/${id}`, {
           method: "DELETE",
         });
         if (!response.ok) {

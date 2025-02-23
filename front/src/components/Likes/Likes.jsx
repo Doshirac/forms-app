@@ -9,7 +9,7 @@ export const Likes = memo(({ surveyId, fetchWithAuth, darkTheme, t }) => {
 
   const fetchLikes = async () => {
     try {
-      const response = await fetchWithAuth(`http://localhost:5000/api/surveys/${surveyId}/likes`);
+      const response = await fetchWithAuth(`/api/surveys/${surveyId}/likes`);
       if (!response.ok) throw new Error(t("likes.loadingError"));
       const data = await response.json();
       setTotalLikes(data.totalLikes);
@@ -26,7 +26,7 @@ export const Likes = memo(({ surveyId, fetchWithAuth, darkTheme, t }) => {
     setIsLikeLoading(true);
     try {
       const method = hasLiked ? "DELETE" : "POST";
-      const endpoint = `http://localhost:5000/api/surveys/${surveyId}/like`;
+      const endpoint = `/api/surveys/${surveyId}/like`;
       const response = await fetchWithAuth(endpoint, { method });
       if (!response.ok) throw new Error(t("likes.update"));
       setHasLiked(!hasLiked);
