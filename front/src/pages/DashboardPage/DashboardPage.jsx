@@ -23,17 +23,14 @@ const DashboardPage = () => {
     const fetchSurveys = async () => {
       try {
         setLoading(true);
-        // Fetch all surveys/templates
         const response = await fetchWithAuth("http://localhost:5000/api/surveys");
         if (!response.ok) {
           throw new Error(t("dashboard.failLoadingLatest"));
         }
         const surveysData = await response.json();
 
-        // For each survey, fetch the responses count only if user has access
         const surveysWithResponses = await Promise.all(
           surveysData.map(async (survey) => {
-            // Only fetch responses if user is admin or owns the survey
             if (isAdmin || survey.created_by === survey.user_id) {
               try {
                 const res = await fetchWithAuth(`http://localhost:5000/api/surveys/${survey.id}/results`);
@@ -45,15 +42,12 @@ const DashboardPage = () => {
                 console.error(`Skipping responses for survey ${survey.id} - no access`);
               }
             }
-            // Return survey with 0 responses if no access or error
             return { ...survey, responsesCount: 0 };
           })
         );
 
         setSurveys(surveysWithResponses);
 
-        // Top 5 most popular templates: sort descending by responsesCount
-        // Only include surveys where we have response counts
         const topPopular = [...surveysWithResponses]
           .filter(survey => isAdmin || survey.created_by === survey.user_id)
           .sort((a, b) => b.responsesCount - (a.responsesCount || 0))
@@ -103,8 +97,6 @@ const DashboardPage = () => {
       <Typography variant="h4" className="text-2xl font-bold mb-4 text-green-500 dark:text-yellow-500">
         {t("dashboard.title")}
       </Typography>
-
-      {/* Latest Templates */}
       <section className="mb-8">
         <Typography variant="h5" className="text-xl font-semibold mb-2 text-green-700 dark:text-yellow-500">
           {t("dashboard.latestTemplates")}
@@ -151,8 +143,6 @@ const DashboardPage = () => {
           ))}
         </div>
       </section>
-
-      {/* Popular Templates */}
       <section className="mb-8">
         <Typography variant="h5" className="text-xl font-bold mb-2 text-green-500 dark:text-yellow-500">
           {t("dashboard.topPopularTemplates")}

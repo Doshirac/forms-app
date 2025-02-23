@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../models/db");
 const defaultJSON = require("../constants/constants").defaultJSON;
+const newSurvey = require("../constants/constants").newSurvey;
 const { canModifySurvey } = require("../uitls/canModifySurvey");
 
 router.get("/", async (req, res) => {
@@ -76,8 +77,8 @@ router.post("/", async (req, res) => {
   try {
     const surveyTemplate = JSON.parse(JSON.stringify(defaultJSON));
 
-    surveyTemplate.name = `New Survey`;
-    surveyTemplate.json.title = `New Survey`;
+    surveyTemplate.name = newSurvey;
+    surveyTemplate.json.title = newSurvey;
     
     const description = surveyTemplate.json.description || "";
     const tags = surveyTemplate.json.tags 

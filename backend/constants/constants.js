@@ -13,3 +13,5 @@ export const defaultJSON = {
       ]
     }
 };
+
+export const newSurvey = `New Survey`
