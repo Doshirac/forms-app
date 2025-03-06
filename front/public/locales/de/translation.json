@@ -139,5 +139,19 @@
     "rank": "Rang",
     "fetchError": "Dashboard-Abruffehler: ",
     "noAccess": "Antworten für Umfrage überspringen {{id}} - kein Zugriff"
+  },
+  "sales": {
+    "integrateSalesforce": "SalesForce-Konto",
+    "integrate": "Integration mit Salesforce",
+    "view": "Anzeigen des neuen Kontos in Salesforce",
+    "email": "Email *",
+    "firstName": "Vorname *",
+    "lastName": "Nachname *",
+    "company": "Company Name *",
+    "phone": "Telefon (optional)",
+    "fill": "Bitte geben Sie Ihre E-Mail-Adresse, Vorname, Nachname und Firmenname ein.",
+    "errorCreation": "Fehler beim Erstellen von Datensätzen in Salesforce",
+    "errorServer": "Fehler beim Verbinden mit dem Server",
+    "creation": "In Salesforce erstellen"
   }
 }

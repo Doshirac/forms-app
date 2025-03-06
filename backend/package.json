@@ -18,6 +18,7 @@
     "i18next": "^24.2.2",
     "i18next-fs-backend": "^2.6.0",
     "i18next-http-middleware": "^3.7.1",
+    "jsforce": "^3.6.6",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1"
   }

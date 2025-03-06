@@ -31,5 +31,11 @@
   },
   "comments": {
     "textRequiered": "Comment text is required"
+  },
+  "sales": {
+    "missNames": "Missing required fields: firstName and lastName.",
+    "noUser": "No user found in DB for the current token.",
+    "success": "Salesforce Account & Contact created successfully",
+    "error": "Error creating records in Salesforce"
   }
 }

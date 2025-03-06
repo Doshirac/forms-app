@@ -1,4 +1,4 @@
-export const defaultJSON = {
+const defaultJSON = {
     name: "New Survey",
     json: {
       title: "Default Title",
@@ -14,4 +14,9 @@ export const defaultJSON = {
     }
 };
 
-export const newSurvey = `New Survey`
+const newSurvey = `New Survey`
+
+module.exports = {
+  defaultJSON,
+  newSurvey
+};

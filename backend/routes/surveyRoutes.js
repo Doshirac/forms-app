@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../models/db");
-const defaultJSON = require("../constants/constants").defaultJSON;
-const newSurvey = require("../constants/constants").newSurvey;
+const { defaultJSON, newSurvey } = require("../constants/constants");
 const { canModifySurvey } = require("../uitls/canModifySurvey");
 
 router.get("/", async (req, res) => {

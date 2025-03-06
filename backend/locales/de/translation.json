@@ -31,5 +31,11 @@
   },
   "comments": {
     "textRequiered": "Kommentartext ist erforderlich"
+  },
+  "sales": {
+    "missNames": "Fehlende Pflichtfelder: Vorname und Nachname.",
+    "noUser": "Für das aktuelle Token wurde in der Datenbank kein Benutzer gefunden.",
+    "success": "Salesforce Account & Kontakt erfolgreich erstellt",
+    "error": "Fehler beim Erstellen von Datensätzen in Salesforce"
   }
 }

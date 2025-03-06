@@ -139,5 +139,19 @@
     "rank": "Rank",
     "fetchError": "Dashboard fetch error: ",
     "noAccess": "Skipping responses for survey {{id}} - no access"
+  },
+  "sales": {
+    "integrateSalesforce": "SalesForce account",
+    "integrate": "Integrate with Salesforce",
+    "view": "View the new Account in Salesforce",
+    "email": "Email *",
+    "firstName": "First Name *",
+    "lastName": "Last Name *",
+    "company": "Company Name *",
+    "phone": "Phone (optional)",
+    "fill": "Please fill out your email, first name, last name, and company name.",
+    "errorCreation": "Error creating records in Salesforce",
+    "errorServer": "Error connecting to the server",
+    "creation": "Create in Salesforce"
   }
 }

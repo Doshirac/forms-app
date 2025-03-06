@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const surveyRoutes = require("./routes/surveyRoutes");
 const likesRoutes = require("./routes/likesRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const salesRoutes = require("./routes/salesRoutes");
 const authMiddleware = require("./middlewares/authMiddleware");
 const languageMiddleware = require("./middlewares/languageMiddleware");
 
@@ -31,6 +32,8 @@ app.use("/api/users", authMiddleware, userRoutes);
 
 app.use("/api/surveys", authMiddleware, commentRoutes);
 app.use("/api/surveys", authMiddleware, likesRoutes);
+
+app.use("/api/sales", authMiddleware, salesRoutes);
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is accessible on port ${PORT}`);

@@ -14,6 +14,7 @@ import Results from "./pages/Results/Results";
 import Surveys from "./pages/Surveys/Surveys";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import DashboardLayout from "./routes/DashboardLayout";
+import ProfileSalesforce from "./pages/ProfileSalesforce/ProfileSalesforce";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                   <Route path="results/:id" element={<Results />} />
                   <Route path="*" element={<div>404 - Not Found</div>} />
                 </Route>
+                <Route path="/profile/salesforce" element={<ProfileSalesforce />} />
               </Routes>
             </main>
             <Footer />
